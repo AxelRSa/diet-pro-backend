@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require("cors")
 const app = express()
 
 // env variables
@@ -6,17 +7,16 @@ const app = express()
 require('dotenv').config()
 
 // middlewares
-// body parser
+// body parser for json info
 app.use(express.json())
+// cors usage https://www.npmjs.com/package/cors
+app.use(cors())
 
+// use routes
+app.use("/api/auth", require("./app/routes/auth.route"))
+// app.use("/user", require("./app/routes/users.route"))
 
-// routes
-const user = require("./routes/users.route")
-
-// use that routes
-app.use("/user", user)
-
-
+// server initialization
 app.listen(process.env.PORT, () => {
   console.log("server is running on http://localhost:" + process.env.PORT + "/");
 })
