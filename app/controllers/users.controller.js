@@ -8,7 +8,7 @@ const getUser = async (req, res) => {
 
     const [{ username, email }] = await users.getUserById(idUser)
 
-    res.json({ status: "success", data: { email, idUser, username } })
+    res.json({ status: "success", data: { user: {email, idUser, username} } })
 
   } catch (error) {
     res.status(400).json({ status: "error", message: error })
