@@ -32,9 +32,9 @@ const createPersonWeight = async (req, res) => {
 
 const getPersons = async (req, res) => {
   try {
-    const { idUser, fisrtDate, secondDate } = req.body
+    const { idUser, firstDate, secondDate } = req.body
 
-    const personsData = await persons.getPersonsWeightsByUserId(idUser, fisrtDate, secondDate)
+    const personsData = await persons.getPersonsWeightsByUserId(idUser, firstDate, secondDate)
 
     const arrayModified = generateDashboardPersonStructure(personsData)
 
