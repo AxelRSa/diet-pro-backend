@@ -26,7 +26,7 @@ const getPerson = async (idUser, name) => {
 
 const getPersonsWeightsByUserId = async (idUser, fisrtDate, secondDate) => {
   try {
-    const sql = "SELECT p.name, p.id_person , pw.date, pw.weight FROM persons p LEFT JOIN (SELECT date, weight, id_person FROM person_weights WHERE date >= ? AND date <= ?) pw ON p.id_person = pw.id_person WHERE p.id_user = ?"
+    const sql = "SELECT p.name, p.id_person , pw.date, pw.weight FROM persons p LEFT JOIN (SELECT date, weight, id_person FROM person_weights WHERE date >= ? AND date <= ?) pw ON p.id_person = pw.id_person WHERE p.id_user = ? ORDER BY date ASC"
     return await query(sql, [fisrtDate,secondDate,idUser])
   } catch (error) { throw error }
 }

@@ -39,6 +39,15 @@ const generateDashboardPersonStructure = (array) => {
 
   newArray.shift()
 
+  // order by last update be fisrt
+  newArray.sort((a, b)=>{
+    if (a.chartData && b.chartData) {
+      if (a.chartData.labels.at(-1) > b.chartData.labels.at(-1)) return -1
+      return 1
+    }
+    return -1
+  })
+
   return newArray
 }
 
