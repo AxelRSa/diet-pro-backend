@@ -8,10 +8,14 @@ const persons = require("../controllers/persons.controller")
 // create
 router.post("/", checkAuth, persons.createPerson)
 router.post("/person-weight", checkAuth, persons.createPersonWeight)
+
 // read
-router.post("/all", checkAuth, persons.getPersons)
+router.get("/all/:idUser", checkAuth, persons.getPersons)
+// router.get("/:id", checkAuth, persons.getPerson)
+
 // update
 router.put("/person-weight", checkAuth, persons.updatePersonWeight)
+
 // delete
 
 module.exports = router

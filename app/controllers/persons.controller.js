@@ -1,6 +1,7 @@
 const { generateDashboardPersonStructure } = require("../helpers/utils")
 const persons = require("../service/persons.service")
 
+// create
 const createPerson = async (req, res) => {
   try {
     const { idUser, name } = req.body
@@ -30,9 +31,11 @@ const createPersonWeight = async (req, res) => {
   }
 }
 
+// read
 const getPersons = async (req, res) => {
   try {
-    const { idUser, firstDate, secondDate } = req.body
+    const { firstDate, secondDate } = req.query
+    const { idUser } = req.params
 
     const personsData = await persons.getPersonsWeightsByUserId(idUser, firstDate, secondDate)
 
@@ -45,6 +48,11 @@ const getPersons = async (req, res) => {
   }
 }
 
+// const getPerson = async (req, res) => {
+
+// }
+
+// update
 const updatePersonWeight = async (req, res) => {
   try {
     const { idPerson, weight, date } = req.body
@@ -57,9 +65,12 @@ const updatePersonWeight = async (req, res) => {
   }
 }
 
+// delete
+
 module.exports = {
   createPerson,
   createPersonWeight,
   getPersons,
+  // getPerson,
   updatePersonWeight
 }
