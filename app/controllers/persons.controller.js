@@ -1,4 +1,4 @@
-const { generateDashboardPersonStructure } = require("../helpers/utils")
+const { generateDashboardPersonStructure } = require("../helpers/handleArraysAndObjects")
 const persons = require("../service/persons.service")
 
 // create
@@ -48,9 +48,25 @@ const getPersons = async (req, res) => {
   }
 }
 
-// const getPerson = async (req, res) => {
+const getPerson = async (req, res) => {
+  try {
+    const { firstDate, secondDate, idPerson } = req.query
 
-// }
+    const response = await persons.getPersonWeightsByIdPerson(idPerson, firstDate, secondDate)
+
+    const personObject = {
+      name: response[0].name,
+      chartData: {
+        labels: response.map(register => register.date),
+        data: response.map(register => register.weight)
+      }
+    }
+
+    res.json({ status: "success", data: { person: personObject } })
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error.message })
+  }
+}
 
 // update
 const updatePersonWeight = async (req, res) => {
@@ -71,6 +87,6 @@ module.exports = {
   createPerson,
   createPersonWeight,
   getPersons,
-  // getPerson,
+  getPerson,
   updatePersonWeight
 }

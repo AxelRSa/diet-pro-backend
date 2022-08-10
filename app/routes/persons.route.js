@@ -10,8 +10,8 @@ router.post("/", checkAuth, persons.createPerson)
 router.post("/person-weight", checkAuth, persons.createPersonWeight)
 
 // read
-router.get("/all/:idUser", checkAuth, persons.getPersons)
-// router.get("/:id", checkAuth, persons.getPerson)
+router.get("/person-weight/all/id-user/:idUser", checkAuth, persons.getPersons)
+router.get("/person-weight", checkAuth, persons.getPerson)
 
 // update
 router.put("/person-weight", checkAuth, persons.updatePersonWeight)
