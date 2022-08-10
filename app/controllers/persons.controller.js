@@ -6,7 +6,7 @@ const createPerson = async (req, res) => {
   try {
     const { idUser, name } = req.body
 
-    const personWithThatName = await persons.getPerson(idUser, name)
+    const personWithThatName = await persons.getPersonByIdUserAndName(idUser, name)
     if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
 
     await persons.createPerson(idUser, name)
@@ -32,10 +32,9 @@ const createPersonWeight = async (req, res) => {
 }
 
 // read
-const getPersons = async (req, res) => {
+const getPersonsWeights = async (req, res) => {
   try {
-    const { firstDate, secondDate } = req.query
-    const { idUser } = req.params
+    const { firstDate, secondDate, idUser } = req.query
 
     const personsData = await persons.getPersonsWeightsByUserId(idUser, firstDate, secondDate)
 
@@ -48,7 +47,7 @@ const getPersons = async (req, res) => {
   }
 }
 
-const getPerson = async (req, res) => {
+const getPersonWeights = async (req, res) => {
   try {
     const { firstDate, secondDate, idPerson } = req.query
 
@@ -86,7 +85,7 @@ const updatePersonWeight = async (req, res) => {
 module.exports = {
   createPerson,
   createPersonWeight,
-  getPersons,
-  getPerson,
+  getPersonsWeights,
+  getPersonWeights,
   updatePersonWeight
 }

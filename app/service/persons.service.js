@@ -21,6 +21,13 @@ const createPersonWeightByIdPerson = async (idPerson, weight, date) => {
 
 // read
 
+const getPersonByIdUserAndName = async (idUser, name) => {
+  try {
+    const sql = "SELECT name FROM persons WHERE id_user = ? AND name = ?"
+    return await query(sql, [idUser, name])
+  } catch (error) { throw error }
+}
+
 const getPersonWeightsByIdPerson = async (idPerson, firstDate, secondDate) => {
   try {
     const sql = "SELECT p.name, pw.date, pw.weight FROM diet_local.persons p INNER JOIN diet_local.person_weights pw ON p.id_person = pw.id_person WHERE p.id_person = ? AND pw.date >= ? AND pw.date <= ? ORDER BY date ASC"
@@ -50,6 +57,7 @@ const updatePersonWeightByIdPersonAndDate = async(idPerson, weight, date) =>{
 module.exports = {
   createPerson,
   createPersonWeightByIdPerson,
+  getPersonByIdUserAndName,
   getPersonWeightsByIdPerson,
   getPersonsWeightsByUserId,
   updatePersonWeightByIdPersonAndDate
