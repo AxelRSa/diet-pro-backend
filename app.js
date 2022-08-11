@@ -16,6 +16,7 @@ app.use(cors())
 app.use("/api/auth", require("./app/routes/auth.route"))
 app.use("/api/user", require("./app/routes/users.route"))
 app.use("/api/person", require("./app/routes/persons.route"))
+app.use("/api/food", require("./app/routes/food.route"))
 
 // server initialization
 app.listen(process.env.PORT, () => {
