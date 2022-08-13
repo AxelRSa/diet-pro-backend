@@ -55,6 +55,7 @@ const getPersonWeights = async (req, res) => {
 
     const personObject = {
       name: response[0].name,
+      idPerson: response[0].id_person,
       chartData: {
         labels: response.map(register => register.date),
         data: response.map(register => register.weight)
@@ -80,6 +81,21 @@ const updatePersonWeight = async (req, res) => {
   }
 }
 
+const updatePersonName = async (req, res) => {
+  try {
+    const { idUser, idPerson, name } = req.body
+
+    const personWithThatName = await persons.getPersonByIdUserAndName(idUser, name)
+    if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
+
+    await persons.updatePersonNameByIdPerson(idPerson, name)
+
+    res.json({ status: "success", message: `Now your the name is ${name}` })
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error.message })
+  }
+}
+
 // delete
 
 module.exports = {
@@ -87,5 +103,6 @@ module.exports = {
   createPersonWeight,
   getPersonsWeights,
   getPersonWeights,
-  updatePersonWeight
+  updatePersonWeight,
+  updatePersonName
 }

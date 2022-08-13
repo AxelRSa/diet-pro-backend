@@ -15,6 +15,7 @@ router.get("/person-weight", checkAuth, persons.getPersonWeights)
 
 // update
 router.put("/person-weight", checkAuth, persons.updatePersonWeight)
+router.put("/", checkAuth, persons.updatePersonName)
 
 // delete
 

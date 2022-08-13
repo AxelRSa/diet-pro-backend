@@ -30,7 +30,7 @@ const getPersonByIdUserAndName = async (idUser, name) => {
 
 const getPersonWeightsByIdPerson = async (idPerson, firstDate, secondDate) => {
   try {
-    const sql = "SELECT p.name, pw.date, pw.weight FROM diet_local.persons p INNER JOIN diet_local.person_weights pw ON p.id_person = pw.id_person WHERE p.id_person = ? AND pw.date >= ? AND pw.date <= ? ORDER BY date ASC"
+    const sql = "SELECT p.id_person, p.name, pw.date, pw.weight FROM diet_local.persons p INNER JOIN diet_local.person_weights pw ON p.id_person = pw.id_person WHERE p.id_person = ? AND pw.date >= ? AND pw.date <= ? ORDER BY date ASC"
     return await query(sql, [idPerson, firstDate, secondDate])
   } catch (error) { throw error }
 }
@@ -38,16 +38,23 @@ const getPersonWeightsByIdPerson = async (idPerson, firstDate, secondDate) => {
 const getPersonsWeightsByUserId = async (idUser, firstDate, secondDate) => {
   try {
     const sql = "SELECT p.name, p.id_person , pw.date, pw.weight FROM persons p LEFT JOIN (SELECT date, weight, id_person FROM person_weights WHERE date >= ? AND date <= ?) pw ON p.id_person = pw.id_person WHERE p.id_user = ? ORDER BY date ASC"
-    return await query(sql, [firstDate,secondDate,idUser])
+    return await query(sql, [firstDate, secondDate, idUser])
   } catch (error) { throw error }
 }
 
 // update
 
-const updatePersonWeightByIdPersonAndDate = async(idPerson, weight, date) =>{
+const updatePersonWeightByIdPersonAndDate = async (idPerson, weight, date) => {
   try {
     const sql = "UPDATE person_weights SET weight = ? WHERE id_person = ? AND date = ?"
     return await query(sql, [weight, idPerson, date])
+  } catch (error) { throw error }
+}
+
+const updatePersonNameByIdPerson = async (idPerson, name) => {
+  try {
+    const sql = "UPDATE persons SET name = ? WHERE id_person = ?"
+    return await query(sql, [name, idPerson])
   } catch (error) { throw error }
 }
 
@@ -60,5 +67,6 @@ module.exports = {
   getPersonByIdUserAndName,
   getPersonWeightsByIdPerson,
   getPersonsWeightsByUserId,
-  updatePersonWeightByIdPersonAndDate
+  updatePersonWeightByIdPersonAndDate,
+  updatePersonNameByIdPerson,
 }
