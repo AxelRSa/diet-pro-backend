@@ -3,19 +3,23 @@ const router = express.Router()
 
 const { checkAuth } = require("../middleware/auth")
 
-const persons = require("../controllers/persons.controller")
+const controller = require("../controllers/persons.controller")
+const validation = require("../validations/person.validation")
 
 // create
-router.post("/", checkAuth, persons.createPerson)
-router.post("/person-weight", checkAuth, persons.createPersonWeight)
+router.post("/", checkAuth, validation.createPerson, controller.createPerson)
+
+router.post("/person-weight", checkAuth, validation.createPersonWeight, controller.createPersonWeight)
 
 // read
-router.get("/person-weight/all", checkAuth, persons.getPersonsWeights)
-router.get("/person-weight", checkAuth, persons.getPersonWeights)
+router.get("/person-weight/all", checkAuth, validation.getPersonsWeights, controller.getPersonsWeights)
+
+router.get("/person-weight", checkAuth, validation.getPersonWeights, controller.getPersonWeights)
 
 // update
-router.put("/person-weight", checkAuth, persons.updatePersonWeight)
-router.put("/", checkAuth, persons.updatePersonName)
+router.put("/person-weight", checkAuth, validation.updatePersonWeight, controller.updatePersonWeight)
+
+router.put("/", checkAuth, validation.updatePersonName, controller.updatePersonName)
 
 // delete
 
