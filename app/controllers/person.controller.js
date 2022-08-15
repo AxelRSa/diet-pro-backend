@@ -1,15 +1,15 @@
 const { generateDashboardPersonStructure } = require("../helpers/handleArraysAndObjects")
-const persons = require("../service/persons.service")
+const person = require("../service/person.service")
 
 // create
 const createPerson = async (req, res) => {
   try {
     const { idUser, name } = req.body
 
-    const personWithThatName = await persons.getPersonByIdUserAndName(idUser, name)
+    const personWithThatName = await person.getPersonByIdUserAndName(idUser, name)
     if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
 
-    await persons.createPerson(idUser, name)
+    await person.createPerson(idUser, name)
 
     res.json({ status: "success", message: `The person ${name} was created` })
 
@@ -22,7 +22,7 @@ const createPersonWeight = async (req, res) => {
   try {
     const { idPerson, weight, date } = req.body
 
-    await persons.createPersonWeightByIdPerson(idPerson, weight, date)
+    await person.createPersonWeightByIdPerson(idPerson, weight, date)
 
     res.json({ status: "success", message: "Your information was received" })
 
@@ -36,7 +36,7 @@ const getPersonsWeights = async (req, res) => {
   try {
     const { firstDate, secondDate, idUser } = req.query
 
-    const personsData = await persons.getPersonsWeightsByUserId(idUser, firstDate, secondDate)
+    const personsData = await person.getPersonsWeightsByUserId(idUser, firstDate, secondDate)
 
     const arrayModified = generateDashboardPersonStructure(personsData)
 
@@ -51,7 +51,7 @@ const getPersonWeights = async (req, res) => {
   try {
     const { firstDate, secondDate, idPerson } = req.query
 
-    const response = await persons.getPersonWeightsByIdPerson(idPerson, firstDate, secondDate)
+    const response = await person.getPersonWeightsByIdPerson(idPerson, firstDate, secondDate)
 
     const personObject = {
       name: response[0].name,
@@ -73,7 +73,7 @@ const updatePersonWeight = async (req, res) => {
   try {
     const { idPerson, weight, date } = req.body
 
-    await persons.updatePersonWeightByIdPersonAndDate(idPerson, weight, date)
+    await person.updatePersonWeightByIdPersonAndDate(idPerson, weight, date)
 
     res.json({ status: "success", message: "The weight was updated" })
   } catch (error) {
@@ -85,7 +85,7 @@ const updatePersonName = async (req, res) => {
   try {
     const { idUser, idPerson, name } = req.body
 
-    const personWithThatName = await persons.getPersonByIdUserAndName(idUser, name)
+    const personWithThatName = await person.getPersonByIdUserAndName(idUser, name)
     if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
 
     await persons.updatePersonNameByIdPerson(idPerson, name)

@@ -3,8 +3,8 @@ const router = express.Router()
 
 const { checkAuth } = require("../middleware/auth")
 
-const user = require("../controllers/users.controller")
+const controller = require("../controllers/user.controller")
 
-router.get("/", checkAuth, user.getUser)
+router.get("/", checkAuth, controller.getUser)
 
 module.exports = router

@@ -3,7 +3,7 @@ const router = express.Router()
 
 const { checkAuth } = require("../middleware/auth")
 
-const controller = require("../controllers/persons.controller")
+const controller = require("../controllers/person.controller")
 const validation = require("../validations/person.validation")
 
 // create

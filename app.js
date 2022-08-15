@@ -14,8 +14,8 @@ app.use(cors())
 
 // use routes
 app.use("/api/auth", require("./app/routes/auth.route"))
-app.use("/api/user", require("./app/routes/users.route"))
-app.use("/api/person", require("./app/routes/persons.route"))
+app.use("/api/user", require("./app/routes/user.route"))
+app.use("/api/person", require("./app/routes/person.route"))
 app.use("/api/food", require("./app/routes/food.route"))
 
 // server initialization

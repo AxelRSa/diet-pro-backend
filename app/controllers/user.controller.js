@@ -1,4 +1,4 @@
-const users = require('../service/users.service');
+const user = require('../service/user.service');
 const { verifyToken } = require("../helpers/generateToken")
 
 const getUser = async (req, res) => {
@@ -6,7 +6,7 @@ const getUser = async (req, res) => {
     const token = req.headers.authorization.split(" ").pop()
     const { id: idUser } = await verifyToken(token)
 
-    const [{ username, email }] = await users.getUserById(idUser)
+    const [{ username, email }] = await user.getUserById(idUser)
 
     res.json({ status: "success", data: { user: {email, idUser, username} } })
 
