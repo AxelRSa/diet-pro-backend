@@ -88,7 +88,7 @@ const updatePersonName = async (req, res) => {
     const personWithThatName = await person.getPersonByIdUserAndName(idUser, name)
     if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
 
-    await persons.updatePersonNameByIdPerson(idPerson, name)
+    await person.updatePersonNameByIdPerson(idPerson, name)
 
     res.json({ status: "success", message: `Now your the name is ${name}` })
   } catch (error) {
