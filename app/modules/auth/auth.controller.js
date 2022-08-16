@@ -1,12 +1,12 @@
-const auth = require('../service/auth.service');
-const { encrypt, compare } = require("../helpers/handleBcrypt")
-const { tokenSign } = require("../helpers/generateToken")
+const authService = require('../../services/auth.service');
+const { encrypt, compare } = require("../../helpers/handleBcrypt")
+const { tokenSign } = require("../../helpers/generateToken")
 
 const login = async (req, res) => {
   try {
     const { email, password } = req.body
 
-    const userData = await auth.getUserByEmail(email)
+    const userData = await authService.getUserByEmail(email)
     if (userData.length === 0) throw "The email is not registered, create an account"
 
     const user = userData[0]
@@ -27,7 +27,7 @@ const signup = async (req, res) => {
   try {
     const { email, password, username } = req.body
 
-    const emailExist = await auth.getEmailByEmail(email)
+    const emailExist = await authService.getEmailByEmail(email)
     if (emailExist.length > 0) throw "The email exist, try with another"
 
     const hashedPassword = await encrypt(password)

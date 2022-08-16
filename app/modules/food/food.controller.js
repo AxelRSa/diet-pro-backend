@@ -1,14 +1,14 @@
-const food = require("../service/food.service")
+const foodService = require("../../services/food.service")
 
 // create
 const createFood = async (req, res) => {
   try {
     const { idUser, name, protein, carbohydrates, fat } = req.body
 
-    const foodsWithThatName = await food.getFoodsByIdUserAndName(idUser, name)
+    const foodsWithThatName = await foodService.getFoodsByIdUserAndName(idUser, name)
     if (foodsWithThatName.length >= 1) throw "That name exists, please, choose another one"
 
-    await food.createFood(idUser, name, protein, carbohydrates, fat)
+    await foodService.createFood(idUser, name, protein, carbohydrates, fat)
 
     res.json({ status: "success", message: `The food with name: ${name}, was created` })
 
