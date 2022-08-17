@@ -16,15 +16,30 @@ const createFood = async (idUser, name, protein, carbohydrates, fat) => {
 }
 
 // read
-const getFoodsByIdUserAndName = async (idUser, name) => {
+const getFoodsByIdUserWithLimits = async (idUser, limitStart, limitEnd) => {
+  console.log(limitStart, limitEnd);
   try {
     const sql =
       `
-      SELECT name FROM foods
+      SELECT f.id_food as idFood, f.name, f.carbohydrates, f.protein, f.fat, fm.measure_name as measureName, fm.quantity, fm.id_food_measure as idMeasure
+      FROM foods as f
+      LEFT JOIN foods_measures as fm ON f.id_food = fm.id_food
       WHERE id_user = ?
-      AND name = ?
+      ORDER BY f.name DESC
+      LIMIT ?, ?
       `
-    return await query(sql, [idUser, name])
+    return await query(sql, [idUser, limitStart, limitEnd])
+  } catch (error) { throw error }
+}
+
+const getFoodsQuantityByIdUser = async (idUser) => {
+  try {
+    const sql =
+      `
+      SELECT COUNT(*) as count FROM foods
+      WHERE id_user = ?
+      `
+    return await query(sql, [idUser])
   } catch (error) { throw error }
 }
 // update
@@ -33,5 +48,6 @@ const getFoodsByIdUserAndName = async (idUser, name) => {
 
 module.exports = {
   createFood,
-  getFoodsByIdUserAndName
+  getFoodsByIdUserWithLimits,
+  getFoodsQuantityByIdUser
 }

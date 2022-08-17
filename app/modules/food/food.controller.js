@@ -1,3 +1,5 @@
+const { paginationStart, paginationEnd, howManyPagesAre } = require("../../helpers/paginationHelper")
+const { generateFoodStructure } = require("../../helpers/handleArraysAndObjects")
 const foodService = require("../../services/food.service")
 
 // create
@@ -18,11 +20,41 @@ const createFood = async (req, res) => {
 }
 
 // read
+const getFood = async (req, res) => {
+  try {
+    const { search, idUser, pagination } = req.query
+
+    const ITEMS_PER_PAGINATION = 10
+    const limitStart = paginationStart(pagination, ITEMS_PER_PAGINATION)
+    const limitEnd = paginationEnd(pagination, ITEMS_PER_PAGINATION)
+    let dbResponse = null
+
+    const paginationResponse = await foodService.getFoodsQuantityByIdUser(idUser)
+    const howManyPaginationAre = howManyPagesAre(paginationResponse[0].count, ITEMS_PER_PAGINATION)
+
+    if (!search) {
+      dbResponse = await foodService.getFoodsByIdUserWithLimits(idUser, limitStart, limitEnd)
+    }
+
+    const data = {
+      foods: generateFoodStructure(dbResponse),
+      pagination: {
+        current: parseInt(pagination),
+        exist: howManyPaginationAre
+      }
+    }
+
+    res.json({ status: "success", data })
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error })
+  }
+}
 
 // update
 
 // delete
 
 module.exports = {
-  createFood
+  createFood,
+  getFood
 }

@@ -10,6 +10,14 @@ const createFood = [
   (req, res, next) => validateResult(req, res, next)
 ]
 
+const getFood = [
+  check("search").exists().isString(),
+  check("idUser").exists().notEmpty().isNumeric(),
+  check("pagination").exists().notEmpty().isNumeric(),
+  (req, res, next) => validateResult(req, res, next)
+]
+
 module.exports = {
-  createFood
+  createFood,
+  getFood
 }

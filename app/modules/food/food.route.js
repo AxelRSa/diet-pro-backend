@@ -15,6 +15,12 @@ router.post(
 )
 
 // read
+router.get(
+  "/",
+  checkAuth,
+  validation.getFood,
+  controller.getFood
+)
 
 // update
 
