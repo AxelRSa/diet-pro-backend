@@ -17,7 +17,6 @@ const createFood = async (idUser, name, protein, carbohydrates, fat) => {
 
 // read
 const getFoodsByIdUserWithLimits = async (idUser, limitStart, limitEnd) => {
-  console.log(limitStart, limitEnd);
   try {
     const sql =
       `
@@ -42,6 +41,33 @@ const getFoodsQuantityByIdUser = async (idUser) => {
     return await query(sql, [idUser])
   } catch (error) { throw error }
 }
+
+const getFoodsByIdUserAndSearchWithLimits = async (idUser, limitStart, limitEnd, search) => {
+  try {
+    const sql =
+      `
+      SELECT f.id_food as idFood, f.name, f.carbohydrates, f.protein, f.fat, fm.measure_name as measureName, fm.quantity, fm.id_food_measure as idMeasure
+      FROM foods as f
+      LEFT JOIN foods_measures as fm ON f.id_food = fm.id_food
+      WHERE id_user = ?
+      AND f.name LIKE ?
+      LIMIT ?, ?
+      `
+    return await query(sql, [idUser, `%${search}%`, limitStart, limitEnd])
+  } catch (error) { throw error }
+}
+
+const getFoodsQuantityByIdUserAndSearch = async (idUser, search, limitStart, limitEnd) => {
+  try {
+    const sql =
+      `
+      SELECT COUNT(*) as count FROM foods
+      WHERE id_user = ?
+      AND name LIKE ?
+      `
+    return await query(sql, [idUser, `%${search}%`, limitStart, limitEnd])
+  } catch (error) { throw error }
+}
 // update
 
 // delete
@@ -49,5 +75,7 @@ const getFoodsQuantityByIdUser = async (idUser) => {
 module.exports = {
   createFood,
   getFoodsByIdUserWithLimits,
-  getFoodsQuantityByIdUser
+  getFoodsQuantityByIdUser,
+  getFoodsByIdUserAndSearchWithLimits,
+  getFoodsQuantityByIdUserAndSearch
 }

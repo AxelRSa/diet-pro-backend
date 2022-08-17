@@ -28,13 +28,20 @@ const getFood = async (req, res) => {
     const limitStart = paginationStart(pagination, ITEMS_PER_PAGINATION)
     const limitEnd = paginationEnd(pagination, ITEMS_PER_PAGINATION)
     let dbResponse = null
+    let paginationResponse = null
+    let howManyPaginationAre = null
 
-    const paginationResponse = await foodService.getFoodsQuantityByIdUser(idUser)
-    const howManyPaginationAre = howManyPagesAre(paginationResponse[0].count, ITEMS_PER_PAGINATION)
 
     if (!search) {
+      paginationResponse = await foodService.getFoodsQuantityByIdUser(idUser)
+      howManyPaginationAre = howManyPagesAre(paginationResponse[0].count, ITEMS_PER_PAGINATION)
       dbResponse = await foodService.getFoodsByIdUserWithLimits(idUser, limitStart, limitEnd)
+    } else {
+      paginationResponse = await foodService.getFoodsQuantityByIdUserAndSearch(idUser)
+      howManyPaginationAre = howManyPagesAre(paginationResponse[0].count, ITEMS_PER_PAGINATION)
+      dbResponse = await foodService.getFoodsByIdUserAndSearchWithLimits(idUser, limitStart, limitEnd, search)
     }
+
 
     const data = {
       foods: generateFoodStructure(dbResponse),
