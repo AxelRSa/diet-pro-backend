@@ -5,10 +5,6 @@ const { checkAuth } = require("../../middleware/auth")
 
 const controller = require("./user.controller")
 
-router.get(
-  "/",
-  checkAuth,
-  controller.getUser
-)
+router.get("/", checkAuth, controller.getUser)
 
 module.exports = router
