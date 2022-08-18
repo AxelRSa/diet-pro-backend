@@ -20,7 +20,7 @@ const createFood = async (req, res) => {
 }
 
 // read
-const getFood = async (req, res) => {
+const getFoods = async (req, res) => {
   try {
     const { search, idUser, pagination } = req.query
 
@@ -63,5 +63,5 @@ const getFood = async (req, res) => {
 
 module.exports = {
   createFood,
-  getFood
+  getFoods
 }
