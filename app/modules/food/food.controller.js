@@ -33,11 +33,11 @@ const getFood = async (req, res) => {
 
 
     if (!search) {
-      paginationResponse = await foodService.getFoodsQuantityByIdUser(idUser)
+      paginationResponse = await foodService.getFoodsCountByIdUser(idUser)
       howManyPaginationAre = howManyPagesAre(paginationResponse[0].count, ITEMS_PER_PAGINATION)
       dbResponse = await foodService.getFoodsByIdUserWithLimits(idUser, limitStart, limitEnd)
     } else {
-      paginationResponse = await foodService.getFoodsQuantityByIdUserAndSearch(idUser)
+      paginationResponse = await foodService.getFoodsCountByIdUserAndSearch(idUser)
       howManyPaginationAre = howManyPagesAre(paginationResponse[0].count, ITEMS_PER_PAGINATION)
       dbResponse = await foodService.getFoodsByIdUserAndSearchWithLimits(idUser, limitStart, limitEnd, search)
     }

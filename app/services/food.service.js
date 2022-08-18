@@ -31,7 +31,7 @@ const getFoodsByIdUserWithLimits = async (idUser, limitStart, limitEnd) => {
   } catch (error) { throw error }
 }
 
-const getFoodsQuantityByIdUser = async (idUser) => {
+const getFoodsCountByIdUser = async (idUser) => {
   try {
     const sql =
       `
@@ -57,7 +57,7 @@ const getFoodsByIdUserAndSearchWithLimits = async (idUser, limitStart, limitEnd,
   } catch (error) { throw error }
 }
 
-const getFoodsQuantityByIdUserAndSearch = async (idUser, search, limitStart, limitEnd) => {
+const getFoodsCountByIdUserAndSearch = async (idUser, search, limitStart, limitEnd) => {
   try {
     const sql =
       `
@@ -75,7 +75,7 @@ const getFoodsQuantityByIdUserAndSearch = async (idUser, search, limitStart, lim
 module.exports = {
   createFood,
   getFoodsByIdUserWithLimits,
-  getFoodsQuantityByIdUser,
+  getFoodsCountByIdUser,
   getFoodsByIdUserAndSearchWithLimits,
-  getFoodsQuantityByIdUserAndSearch
+  getFoodsCountByIdUserAndSearch
 }
