@@ -6,7 +6,7 @@ const app = express()
 // https://www.npmjs.com/package/dotenv
 require('dotenv').config()
 
-// middlewares
+// middleware
 // body parser for json info
 app.use(express.json())
 // cors usage https://www.npmjs.com/package/cors
