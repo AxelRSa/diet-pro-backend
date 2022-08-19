@@ -16,6 +16,18 @@ const createFood = async (idUser, name, protein, carbohydrates, fat) => {
 }
 
 // read
+const getFoodsByIdUserAndName = async (idUser, name) => {
+  try {
+    const sql =
+      `
+      SELECT name FROM foods
+      WHERE id_user = ?
+      AND name = ?
+      `
+    return await query(sql, [idUser, name])
+  } catch (error) { throw error }
+}
+
 const getFoodsByIdUserWithLimits = async (idUser, limitStart, limitEnd) => {
   try {
     const sql =
@@ -74,6 +86,7 @@ const getFoodsCountByIdUserAndSearch = async (idUser, search, limitStart, limitE
 
 module.exports = {
   createFood,
+  getFoodsByIdUserAndName,
   getFoodsByIdUserWithLimits,
   getFoodsCountByIdUser,
   getFoodsByIdUserAndSearchWithLimits,

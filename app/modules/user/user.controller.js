@@ -1,13 +1,14 @@
 const { paginationStart, paginationEnd, howManyPagesAre } = require("../../helpers/paginationHelper")
 const { generateDashboardPersonStructure, generateFoodStructure } = require("../../helpers/handleArraysAndObjects")
 
-
-const personService = require('../../services/user.service');
+const personService = require('../../services/person.service');
 const foodService = require("../../services/food.service")
 
+// create
 const createPerson = async (req, res) => {
   try {
-    const { idUser, name } = req.body
+    const { idUser } = req.params
+    const { name } = req.body
 
     const personWithThatName = await personService.getPersonByIdUserAndName(idUser, name)
     if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
@@ -23,7 +24,8 @@ const createPerson = async (req, res) => {
 
 const createFood = async (req, res) => {
   try {
-    const { idUser, name, protein, carbohydrates, fat } = req.body
+    const { idUser } = req.params
+    const { name, protein, carbohydrates, fat } = req.body
 
     const foodsWithThatName = await foodService.getFoodsByIdUserAndName(idUser, name)
     if (foodsWithThatName.length >= 1) throw "That name exists, please, choose another one"
@@ -37,9 +39,11 @@ const createFood = async (req, res) => {
   }
 }
 
+// read
 const getPersonsWeights = async (req, res) => {
   try {
-    const { firstDate, secondDate, idUser } = req.query
+    const { idUser } = req.params
+    const { firstDate, secondDate } = req.query
 
     const personsData = await personService.getPersonsWeightsByUserId(idUser, firstDate, secondDate)
 
@@ -54,7 +58,8 @@ const getPersonsWeights = async (req, res) => {
 
 const getFoods = async (req, res) => {
   try {
-    const { search, idUser, pagination } = req.query
+    const { idUser } = req.params
+    const { search, pagination } = req.query
 
     const ITEMS_PER_PAGINATION = 10
     const limitStart = paginationStart(pagination, ITEMS_PER_PAGINATION)
@@ -88,6 +93,9 @@ const getFoods = async (req, res) => {
     res.status(400).json({ status: "error", message: error })
   }
 }
+
+// update
+// delete
 
 module.exports = {
   createPerson,
