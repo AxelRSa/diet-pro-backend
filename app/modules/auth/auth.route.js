@@ -8,6 +8,6 @@ const validation = require("./auth.validation")
 
 router.post("/login", validation.login, controller.login)
 router.post("/signup", validation.signup, controller.signup)
-router.get("/user", checkAuth, controller.getUser)
+router.post("/user", checkAuth, controller.getUser)
 
 module.exports = router

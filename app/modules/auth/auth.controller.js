@@ -1,6 +1,6 @@
 const userService = require('../../services/user.service');
 const { encrypt, compare } = require("../../helpers/handleBcrypt")
-const { tokenSign } = require("../../helpers/generateToken")
+const { tokenSign, verifyToken } = require("../../helpers/generateToken")
 
 const login = async (req, res) => {
   try {
@@ -31,7 +31,7 @@ const signup = async (req, res) => {
     if (emailExist.length > 0) throw "The email exist, try with another"
 
     const hashedPassword = await encrypt(password)
-    await auth.createUser(email, hashedPassword, username)
+    await userService.createUser(email, hashedPassword, username)
 
     res.json({ status: "success", message: "The user was created successfully" })
 
