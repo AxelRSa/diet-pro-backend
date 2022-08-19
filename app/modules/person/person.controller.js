@@ -3,9 +3,10 @@ const personService = require("../../services/person.service")
 // create
 const createPersonWeight = async (req, res) => {
   try {
-    const { idPerson, weight, date } = req.body
+    const { idPerson } = req.params
+    const { weight, date } = req.body
 
-    await personService.createPersonWeightByIdPerson(idPerson, weight, date)
+    personService.createPersonWeightByIdPerson(idPerson, weight, date)
 
     res.json({ status: "success", message: "Your information was received" })
 
@@ -17,7 +18,8 @@ const createPersonWeight = async (req, res) => {
 // read
 const getPersonWeights = async (req, res) => {
   try {
-    const { firstDate, secondDate, idPerson } = req.query
+    const { idPerson } = req.params
+    const { firstDate, secondDate } = req.query
 
     const response = await personService.getPersonWeightsByIdPerson(idPerson, firstDate, secondDate)
 
@@ -37,24 +39,10 @@ const getPersonWeights = async (req, res) => {
 }
 
 // update
-const updatePersonName = async (req, res) => {
-  try {
-    const { idUser, idPerson, name } = req.body
-
-    const personWithThatName = await personService.getPersonByIdUserAndName(idUser, name)
-    if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
-
-    await personService.updatePersonNameByIdPerson(idPerson, name)
-
-    res.json({ status: "success", message: `Now your the name is ${name}` })
-  } catch (error) {
-    res.status(400).json({ status: "error", message: error.message })
-  }
-}
-
 const updatePersonWeight = async (req, res) => {
   try {
-    const { idPerson, weight, date } = req.body
+    const { idPerson } = req.params
+    const { weight, date } = req.body
 
     await personService.updatePersonWeightByIdPersonAndDate(idPerson, weight, date)
 
@@ -69,6 +57,5 @@ const updatePersonWeight = async (req, res) => {
 module.exports = {
   createPersonWeight,
   getPersonWeights,
-  updatePersonWeight,
-  updatePersonName
+  updatePersonWeight
 }

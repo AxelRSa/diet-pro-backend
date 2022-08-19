@@ -95,11 +95,27 @@ const getFoods = async (req, res) => {
 }
 
 // update
+const updatePersonName = async (req, res) => {
+  try {
+    const { idPerson, IdUser } = req.params
+    const { name } = req.body
+
+    const personWithThatName = await personService.getPersonByIdUserAndName(IdUser, name)
+    if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
+
+    await personService.updatePersonNameByIdPerson(idPerson, name)
+
+    res.json({ status: "success", message: `Now your the name is ${name}` })
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error.message })
+  }
+}
 // delete
 
 module.exports = {
   createPerson,
   createFood,
   getPersonsWeights,
-  getFoods
+  getFoods,
+  updatePersonName
 }

@@ -22,16 +22,8 @@ const updatePersonWeight = [
   (req, res, next) => validateResult(req, res, next)
 ]
 
-const updatePersonName = [
-  check("idPerson").exists().notEmpty(),
-  check("idUser").exists().notEmpty(),
-  check("name").exists().notEmpty().isString(),
-  (req, res, next) => validateResult(req, res, next)
-]
-
 module.exports = {
   createPersonWeight,
   getPersonWeights,
-  updatePersonWeight,
-  updatePersonName
+  updatePersonWeight
 }

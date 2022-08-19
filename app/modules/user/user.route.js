@@ -14,4 +14,9 @@ router.post("/:idUser/food", checkAuth, validation.createFood, controller.create
 router.get("/:idUser/person-weight", checkAuth, validation.getPersonsWeights, controller.getPersonsWeights)
 router.get("/:idUser/food", checkAuth, validation.getFoods, controller.getFoods)
 
+// update
+router.put("/:idUser/person/:idPerson", checkAuth, validation.updatePersonName, controller.updatePersonName)
+
+// delete
+
 module.exports = router
