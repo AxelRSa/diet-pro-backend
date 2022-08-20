@@ -47,14 +47,18 @@ const getPersonWeightsByIdPerson = async (idPerson, firstDate, secondDate) => {
     const sql =
       `
       SELECT p.id_person, p.name, pw.date, pw.weight
-      FROM diet_local.persons p
-      INNER JOIN diet_local.person_weights pw ON p.id_person = pw.id_person
+      FROM persons p
+      LEFT JOIN (
+        SELECT *
+        FROM person_weights
+        WHERE id_person = ?
+        AND date >= ?
+        AND date <= ?
+        ) pw ON p.id_person = pw.id_person
       WHERE p.id_person = ?
-      AND pw.date >= ?
-      AND pw.date <= ?
-      ORDER BY date ASC
+      ORDER BY pw.date ASC
       `
-    return await query(sql, [idPerson, firstDate, secondDate])
+    return await query(sql, [idPerson, firstDate, secondDate, idPerson])
   } catch (error) { throw error }
 }
 
@@ -71,7 +75,7 @@ const getPersonsWeightsByUserId = async (idUser, firstDate, secondDate) => {
         AND date <= ?
         ) pw ON p.id_person = pw.id_person
       WHERE p.id_user = ?
-      ORDER BY date ASC
+      ORDER BY pw.date ASC
       `
     return await query(sql, [firstDate, secondDate, idUser])
   } catch (error) { throw error }
