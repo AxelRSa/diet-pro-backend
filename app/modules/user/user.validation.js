@@ -30,6 +30,13 @@ const getFoods = [
   (req, res, next) => validateResult(req, res, next)
 ]
 
+const getPersonWeights = [
+  check("firstDate").exists().notEmpty().isDate(),
+  check("secondDate").exists().notEmpty().isDate(),
+  check("idPerson").exists().notEmpty(),
+  (req, res, next) => validateResult(req, res, next)
+]
+
 const updatePersonName = [
   check("idPerson").exists().notEmpty(),
   check("idUser").exists().notEmpty(),
@@ -42,5 +49,6 @@ module.exports = {
   createFood,
   getPersonsWeights,
   getFoods,
+  getPersonWeights,
   updatePersonName
 }

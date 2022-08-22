@@ -10,7 +10,6 @@ const validation = require("./person.validation")
 router.post("/:idPerson/person-weight", checkAuth, validation.createPersonWeight, controller.createPersonWeight)
 
 // read
-router.get("/:idPerson/person-weight", checkAuth, validation.getPersonWeights, controller.getPersonWeights)
 
 // update
 router.put("/:idPerson/person-weight", checkAuth, validation.updatePersonWeight, controller.updatePersonWeight)

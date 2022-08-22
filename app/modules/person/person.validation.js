@@ -8,13 +8,6 @@ const createPersonWeight = [
   (req, res, next) => validateResult(req, res, next)
 ]
 
-const getPersonWeights = [
-  check("firstDate").exists().notEmpty().isDate(),
-  check("secondDate").exists().notEmpty().isDate(),
-  check("idPerson").exists().notEmpty(),
-  (req, res, next) => validateResult(req, res, next)
-]
-
 const updatePersonWeight = [
   check("idPerson").exists().notEmpty(),
   check("weight").exists().notEmpty().isNumeric(),
@@ -24,6 +17,5 @@ const updatePersonWeight = [
 
 module.exports = {
   createPersonWeight,
-  getPersonWeights,
   updatePersonWeight
 }

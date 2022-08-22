@@ -16,27 +16,7 @@ const createPersonWeight = async (req, res) => {
 }
 
 // read
-const getPersonWeights = async (req, res) => {
-  try {
-    const { idPerson } = req.params
-    const { firstDate, secondDate } = req.query
 
-    const response = await personService.getPersonWeightsByIdPerson(idPerson, firstDate, secondDate)
-
-    const personObject = {
-      name: response[0].name,
-      idPerson: response[0].id_person,
-      chartData: {
-        labels: response.map(register => register.date),
-        data: response.map(register => register.weight)
-      }
-    }
-
-    res.json({ status: "success", data: { person: personObject } })
-  } catch (error) {
-    res.status(400).json({ status: "error", message: error.message })
-  }
-}
 
 // update
 const updatePersonWeight = async (req, res) => {
@@ -56,6 +36,5 @@ const updatePersonWeight = async (req, res) => {
 
 module.exports = {
   createPersonWeight,
-  getPersonWeights,
   updatePersonWeight
 }

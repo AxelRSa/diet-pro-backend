@@ -42,7 +42,7 @@ const getPersonByIdUserAndName = async (idUser, name) => {
   } catch (error) { throw error }
 }
 
-const getPersonWeightsByIdPerson = async (idPerson, firstDate, secondDate) => {
+const getPersonWeightsByIdPerson = async (idUser, idPerson, firstDate, secondDate) => {
   try {
     const sql =
       `
@@ -56,9 +56,10 @@ const getPersonWeightsByIdPerson = async (idPerson, firstDate, secondDate) => {
         AND date <= ?
         ) pw ON p.id_person = pw.id_person
       WHERE p.id_person = ?
+      AND p.id_user = ?
       ORDER BY pw.date ASC
       `
-    return await query(sql, [idPerson, firstDate, secondDate, idPerson])
+    return await query(sql, [idPerson, firstDate, secondDate, idPerson, idUser])
   } catch (error) { throw error }
 }
 
