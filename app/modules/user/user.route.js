@@ -14,7 +14,7 @@ router.post("/:idUser/food", checkAuth, validation.createFood, controller.create
 router.get("/:idUser/person-weight", checkAuth, validation.getPersonsWeights, controller.getPersonsWeights)
 router.get("/:idUser/food", checkAuth, validation.getFoods, controller.getFoods)
 router.get("/:idUser/person/:idPerson/person-weight", checkAuth, validation.getPersonWeights, controller.getPersonWeights)
-// router.get("/:idUser/food/:idFood", checkAuth, validation.getFood, controller.getFood)
+router.get("/:idUser/food/:idFood", checkAuth, validation.getFood, controller.getFood)
 
 // update
 router.put("/:idUser/person/:idPerson", checkAuth, validation.updatePersonName, controller.updatePersonName)

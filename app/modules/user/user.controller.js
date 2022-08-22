@@ -117,6 +117,35 @@ const getPersonWeights = async (req, res) => {
   }
 }
 
+const getFood = async (req, res) => {
+  try {
+    const { idUser, idFood } = req.params
+
+    const response = await foodService.getFoodByIdUserAndIdFood(idUser, idFood)
+
+    const food = response
+      .map((food, index, array) => {
+        food.measures = array
+          .filter(item => item.idFood === food.idFood)
+          .map(item => { return { quantity: 1, measureName: item.measureName, grams: item.quantity } })
+        return food
+      })
+      .reduce((acc, current) => {
+        const foodNotExist = !acc.some(item => item.idFood === current.idFood)
+        if (foodNotExist) acc.push(current)
+        return acc
+      }, [])
+
+    const data = {
+      food: food[0]
+    }
+
+    res.json({ status: "success", data })
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error.message })
+  }
+}
+
 // update
 const updatePersonName = async (req, res) => {
   try {
@@ -141,5 +170,6 @@ module.exports = {
   getPersonsWeights,
   getFoods,
   getPersonWeights,
+  getFood,
   updatePersonName
 }

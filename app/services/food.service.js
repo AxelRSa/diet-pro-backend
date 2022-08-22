@@ -80,6 +80,20 @@ const getFoodsCountByIdUserAndSearch = async (idUser, search, limitStart, limitE
     return await query(sql, [idUser, `%${search}%`, limitStart, limitEnd])
   } catch (error) { throw error }
 }
+
+const getFoodByIdUserAndIdFood = async (idUser, idFood) => {
+  try {
+    const sql =
+      `
+      SELECT f.id_food as idFood, f.name, f.carbohydrates, f.protein, f.fat, fm.measure_name as measureName, fm.quantity as grams, fm.id_food_measure as idMeasure
+      FROM foods as f
+      LEFT JOIN foods_measures as fm ON f.id_food = fm.id_food
+      WHERE id_user = ?
+      AND f.id_food = ?
+      `
+    return await query(sql, [idUser, idFood])
+  } catch (error) { throw error }
+}
 // update
 
 // delete
@@ -90,5 +104,6 @@ module.exports = {
   getFoodsByIdUserWithLimits,
   getFoodsCountByIdUser,
   getFoodsByIdUserAndSearchWithLimits,
-  getFoodsCountByIdUserAndSearch
+  getFoodsCountByIdUserAndSearch,
+  getFoodByIdUserAndIdFood
 }
