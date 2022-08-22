@@ -58,7 +58,7 @@ const generateFoodStructure = (array) => {
 			if (item.measureName) {
 				item.items = array
 					.filter(item2 => item2.idFood === item.idFood)
-					.map(item2 => { return { quantity: 1, measureName: item2.measureName, grams: item2.quantity } })
+					.map(item2 => { return { quantity: 1, measureName: item2.measureName, grams: item2.quantity, idMeasure: item2.idMeasure } })
 			}
 			// delete not used object attributes
 			delete item.measureName
