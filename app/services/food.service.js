@@ -85,7 +85,7 @@ const getFoodByIdUserAndIdFood = async (idUser, idFood) => {
   try {
     const sql =
       `
-      SELECT f.id_food as idFood, f.name, f.carbohydrates, f.protein, f.fat, fm.measure_name as measureName, fm.quantity as grams, fm.id_food_measure as idMeasure
+      SELECT f.id_food as idFood, f.name, f.carbohydrates, f.protein, f.fat, fm.measure_name as measureName, fm.quantity, fm.id_food_measure as idMeasure
       FROM foods as f
       LEFT JOIN foods_measures as fm ON f.id_food = fm.id_food
       WHERE id_user = ?

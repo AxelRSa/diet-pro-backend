@@ -123,18 +123,7 @@ const getFood = async (req, res) => {
 
     const response = await foodService.getFoodByIdUserAndIdFood(idUser, idFood)
 
-    const food = response
-      .map((food, index, array) => {
-        food.measures = array
-          .filter(item => item.idFood === food.idFood)
-          .map(item => { return { quantity: 1, measureName: item.measureName, grams: item.quantity } })
-        return food
-      })
-      .reduce((acc, current) => {
-        const foodNotExist = !acc.some(item => item.idFood === current.idFood)
-        if (foodNotExist) acc.push(current)
-        return acc
-      }, [])
+    const food = generateFoodStructure(response)
 
     const data = {
       food: food[0]
