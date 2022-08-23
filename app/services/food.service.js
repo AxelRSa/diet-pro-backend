@@ -129,6 +129,18 @@ const updateFoodByIdFood = async (idFood, name, carbohydrates, protein, fat) => 
   } catch (error) { throw error }
 }
 
+const updateFoodMeasureByIdMeasure = async (idMeasure, name, quantity) => {
+  try {
+    const sql =
+      `
+      UPDATE foods_measures
+      SET measure_name = ?, quantity = ?
+      WHERE id_food_measure = ?
+      `
+    return await query(sql, [name, quantity, idMeasure])
+  } catch (error) { throw error }
+}
+
 // delete
 const deleteFoodMeasureByIdMeasure = async (idMeasure) => {
   try {
@@ -153,5 +165,6 @@ module.exports = {
   getFoodByIdUserAndIdFood,
   getFoodMeasuresByIdFoodAndName,
   updateFoodByIdFood,
-  deleteFoodMeasureByIdMeasure
+  deleteFoodMeasureByIdMeasure,
+  updateFoodMeasureByIdMeasure
 }

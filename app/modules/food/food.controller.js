@@ -6,8 +6,8 @@ const createFoodMeasure = async (req, res) => {
     const { idFood } = req.params
     const { name, quantity } = req.body
 
-    const foodWithThatName = await foodService.getFoodMeasuresByIdFoodAndName(idFood, name)
-    if (foodWithThatName.length >= 1) throw "That measure exists, please, choose another one"
+    const foodMeasureWithThatName = await foodService.getFoodMeasuresByIdFoodAndName(idFood, name)
+    if (foodMeasureWithThatName.length >= 1) throw "That measure exists, please, choose another one"
 
     await foodService.createFoodMeasure(idFood, name, quantity)
 
@@ -20,7 +20,22 @@ const createFoodMeasure = async (req, res) => {
 // read
 
 // update
+const updateFoodMeasure = async (req, res) => {
+  try {
+    const { idFood, idMeasure } = req.params
+    const { name, quantity } = req.body
 
+    const foodMeasureWithThatName = await foodService.getFoodMeasuresByIdFoodAndName(idFood, name)
+    if (foodMeasureWithThatName.length >= 1) throw "That measure exists, please, choose another one"
+
+    await foodService.updateFoodMeasureByIdMeasure(idMeasure, name, quantity)
+
+    res.json({ status: "success", message: `The measure ${name} was updated` })
+
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error })
+  }
+}
 // delete
 const deleteFoodMeasure = async (req, res) => {
   try {
@@ -34,7 +49,9 @@ const deleteFoodMeasure = async (req, res) => {
     res.status(400).json({ status: "error", message: error })
   }
 }
+
 module.exports = {
   createFoodMeasure,
+  updateFoodMeasure,
   deleteFoodMeasure
 }
