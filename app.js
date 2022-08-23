@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require("cors")
+var morgan = require('morgan')
 const app = express()
 
 // env variables
@@ -11,6 +12,8 @@ require('dotenv').config()
 app.use(express.json())
 // cors usage https://www.npmjs.com/package/cors
 app.use(cors())
+// morgan https://www.npmjs.com/package/morgan
+app.use(morgan('tiny'))
 
 // use routes
 app.use("/api/auth", require("./app/modules/auth/auth.route"))
