@@ -50,6 +50,16 @@ const updatePersonName = [
   (req, res, next) => validateResult(req, res, next)
 ]
 
+const updateFood = [
+  check("idUser").exists().notEmpty().isNumeric(),
+  check("idFood").exists().notEmpty().isNumeric(),
+  check("name").exists().notEmpty().isString(),
+  check("carbohydrates").exists().notEmpty().isNumeric(),
+  check("protein").exists().notEmpty().isNumeric(),
+  check("fat").exists().notEmpty().isNumeric(),
+  (req, res, next) => validateResult(req, res, next)
+]
+
 module.exports = {
   createPerson,
   createFood,
@@ -57,5 +67,6 @@ module.exports = {
   getFoods,
   getPersonWeights,
   getFood,
-  updatePersonName
+  updatePersonName,
+  updateFood
 }

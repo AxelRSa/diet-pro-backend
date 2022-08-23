@@ -39,7 +39,6 @@ const createFood = async (req, res) => {
   }
 }
 
-
 // read
 const getPersonsWeights = async (req, res) => {
   try {
@@ -146,7 +145,23 @@ const updatePersonName = async (req, res) => {
 
     await personService.updatePersonNameByIdPerson(idPerson, name)
 
-    res.json({ status: "success", message: `Now your the name is ${name}` })
+    res.json({ status: "success", message: `Now the name is ${name}` })
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error.message })
+  }
+}
+
+const updateFood = async (req, res) => {
+  try {
+    const { idUser, idFood } = req.params
+    const { name, carbohydrates, protein, fat } = req.body
+
+    const foodsWithThatName = await foodService.getFoodsByIdUserAndName(idUser, name)
+    if (foodsWithThatName.length >= 1) throw "That name exists, please, choose another one"
+
+    await foodService.updateFoodByIdFood(idUser, idFood, name, carbohydrates, protein, fat)
+
+    res.json({ status: "success", message: `The info of '${name}' measure was updated` })
   } catch (error) {
     res.status(400).json({ status: "error", message: error.message })
   }
@@ -160,5 +175,6 @@ module.exports = {
   getFoods,
   getPersonWeights,
   getFood,
-  updatePersonName
+  updatePersonName,
+  updateFood
 }
