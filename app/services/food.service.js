@@ -36,7 +36,7 @@ const getFoodsByIdUserWithLimits = async (idUser, limitStart, limitEnd) => {
       FROM foods as f
       LEFT JOIN foods_measures as fm ON f.id_food = fm.id_food
       WHERE id_user = ?
-      ORDER BY f.name DESC
+      ORDER BY f.name ASC
       LIMIT ?, ?
       `
     return await query(sql, [idUser, limitStart, limitEnd])
@@ -88,6 +88,7 @@ const getFoodByIdUserAndIdFood = async (idUser, idFood) => {
       SELECT f.id_food as idFood, f.name, f.carbohydrates, f.protein, f.fat, fm.measure_name as measureName, fm.quantity, fm.id_food_measure as idMeasure
       FROM foods as f
       LEFT JOIN foods_measures as fm ON f.id_food = fm.id_food
+      ORDER BY f.name ASC
       WHERE id_user = ?
       AND f.id_food = ?
       `
