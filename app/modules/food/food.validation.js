@@ -8,6 +8,11 @@ const createFoodMeasure = [
   (req, res, next) => validateResult(req, res, next)
 ]
 
+const deleteFoodMeasure = [
+  check("idMeasure").exists().notEmpty().isNumeric(),
+]
+
 module.exports = {
-  createFoodMeasure
+  createFoodMeasure,
+  deleteFoodMeasure
 }

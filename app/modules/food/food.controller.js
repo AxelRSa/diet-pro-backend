@@ -22,7 +22,19 @@ const createFoodMeasure = async (req, res) => {
 // update
 
 // delete
+const deleteFoodMeasure = async (req, res) => {
+  try {
+    const { idMeasure } = req.params
 
+    await foodService.deleteFoodMeasureByIdMeasure(idMeasure)
+
+    res.json({ status: "success", message: `The measure was deleted` })
+
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error })
+  }
+}
 module.exports = {
-  createFoodMeasure
+  createFoodMeasure,
+  deleteFoodMeasure
 }

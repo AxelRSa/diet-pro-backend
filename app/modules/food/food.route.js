@@ -16,6 +16,6 @@ router.post("/:idFood/measure", checkAuth, validation.createFoodMeasure, control
 // router.put("/measure/:idMeasure", checkAuth, validation.updateFoodMeasure, controller.updateFoodMeasure)
 
 // delete
-// router.delete("/measure/:idMeasure", checkAuth, validation.deleteFoodMeasure, controller.deleteFoodMeasure)
+router.delete("/measure/:idMeasure", checkAuth, validation.deleteFoodMeasure, controller.deleteFoodMeasure)
 
 module.exports = router
