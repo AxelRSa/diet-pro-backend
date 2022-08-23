@@ -7,7 +7,7 @@ const controller = require("./food.controller")
 const validation = require("./food.validation")
 
 // create
-// router.post(":idFood/measure", checkAuth, validation.createFoodMeasure, controller.createFoodMeasure)
+router.post("/:idFood/measure", checkAuth, validation.createFoodMeasure, controller.createFoodMeasure)
 
 // read
 

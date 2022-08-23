@@ -15,6 +15,16 @@ const createFood = async (idUser, name, protein, carbohydrates, fat) => {
   } catch (error) { throw error }
 }
 
+const createFoodMeasure = async (idFood, name, quantity) => {
+  try {
+    const sql =
+      `
+      INSERT INTO foods_measures (id_food, measure_name, quantity)
+      VALUES (?, ?, ?)
+      `
+    return await query(sql, [idFood, name, quantity])
+  } catch (error) { throw error }
+}
 // read
 const getFoodsByIdUserAndName = async (idUser, name) => {
   try {
@@ -94,16 +104,30 @@ const getFoodByIdUserAndIdFood = async (idUser, idFood) => {
     return await query(sql, [idUser, idFood])
   } catch (error) { throw error }
 }
+
+const getFoodMeasuresByIdFoodAndName = async (idFood, name) => {
+  try {
+    const sql =
+      `
+      SELECT * FROM foods_measures
+      WHERE id_food = ?
+      AND measure_name = ?
+      `
+    return await query(sql, [idFood, name])
+  } catch (error) { throw error }
+}
 // update
 
 // delete
 
 module.exports = {
   createFood,
+  createFoodMeasure,
   getFoodsByIdUserAndName,
   getFoodsByIdUserWithLimits,
   getFoodsCountByIdUser,
   getFoodsByIdUserAndSearchWithLimits,
   getFoodsCountByIdUserAndSearch,
-  getFoodByIdUserAndIdFood
+  getFoodByIdUserAndIdFood,
+  getFoodMeasuresByIdFoodAndName
 }
