@@ -153,6 +153,19 @@ const deleteFoodMeasureByIdMeasure = async (idMeasure) => {
   } catch (error) { throw error }
 }
 
+const deleteFoodByIdFood = async (idFood) => {
+  try {
+    const sql =
+      `
+      DELETE FROM foods
+      WHERE id_food = ?
+      `
+    return await query(sql, [idFood])
+  } catch (error) { throw error }
+}
+
+
+
 
 module.exports = {
   createFood,
@@ -166,5 +179,6 @@ module.exports = {
   getFoodMeasuresByIdFoodAndName,
   updateFoodByIdFood,
   deleteFoodMeasureByIdMeasure,
-  updateFoodMeasureByIdMeasure
+  updateFoodMeasureByIdMeasure,
+  deleteFoodByIdFood
 }

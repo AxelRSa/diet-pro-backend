@@ -20,8 +20,14 @@ const deleteFoodMeasure = [
   (req, res, next) => validateResult(req, res, next)
 ]
 
+const deleteFood = [
+  check("idFood").exists().notEmpty().isNumeric(),
+  (req, res, next) => validateResult(req, res, next)
+]
+
 module.exports = {
   createFoodMeasure,
   updateFoodMeasure,
-  deleteFoodMeasure
+  deleteFoodMeasure,
+  deleteFood
 }

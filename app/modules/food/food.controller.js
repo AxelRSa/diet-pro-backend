@@ -50,8 +50,24 @@ const deleteFoodMeasure = async (req, res) => {
   }
 }
 
+const deleteFood = async (req, res) => {
+  try {
+    const { idFood } = req.params
+
+    // send error if the food is used in other meals, plans, days, etc...
+
+    await foodService.deleteFoodByIdFood(idFood)
+
+    res.json({ status: "success", message: `The food was deleted` })
+
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error })
+  }
+}
+
 module.exports = {
   createFoodMeasure,
   updateFoodMeasure,
-  deleteFoodMeasure
+  deleteFoodMeasure,
+  deleteFood
 }
