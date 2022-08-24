@@ -157,7 +157,7 @@ const updateFood = async (req, res) => {
     const { name, carbohydrates, protein, fat } = req.body
 
     const foodsWithThatName = await foodService.getFoodsByIdUserAndName(idUser, name)
-    if (foodsWithThatName.length >= 1) throw "That name exists, please, choose another one"
+    if (foodsWithThatName.length >= 1 && foodsWithThatName[0].name !== name) throw new Error("That name exists, please, choose another one")
 
     await foodService.updateFoodByIdFood(idUser, idFood, name, carbohydrates, protein, fat)
 
