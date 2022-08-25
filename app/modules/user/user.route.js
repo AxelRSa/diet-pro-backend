@@ -9,6 +9,7 @@ const validation = require("./user.validation")
 // create
 router.post("/:idUser/person", checkAuth, validation.createPerson, controller.createPerson)
 router.post("/:idUser/food", checkAuth, validation.createFood, controller.createFood)
+router.post("/:idUser/meal", checkAuth, validation.createMeal, controller.createMeal)
 
 // read
 router.get("/:idUser/person-weight", checkAuth, validation.getPersonsWeights, controller.getPersonsWeights)

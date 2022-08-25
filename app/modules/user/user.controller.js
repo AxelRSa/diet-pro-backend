@@ -3,6 +3,7 @@ const { generateDashboardPersonStructure, generateFoodStructure } = require("../
 
 const personService = require('../../services/person.service');
 const foodService = require("../../services/food.service")
+const mealService = require("../../services/meal.service")
 
 // create
 const createPerson = async (req, res) => {
@@ -33,6 +34,29 @@ const createFood = async (req, res) => {
     await foodService.createFood(idUser, name, protein, carbohydrates, fat)
 
     res.json({ status: "success", message: `The food with name: ${name}, was created` })
+
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error })
+  }
+}
+
+const createMeal = async (req, res) => {
+  try {
+    const { idUser } = req.params
+    const { name, measure, foods } = req.body
+
+    const mealsWithThatName = await mealService.getMealsByIdUserAndName(idUser, name)
+    if (mealsWithThatName.length >= 1) throw "That name exists, please, choose another one"
+
+    const { insertId: idMeal } = await mealService.createMeal(idUser, name, measure)
+
+    await Promise.all(
+      foods.map(({ idFood, idMeasure, quantity }) => {
+        return mealService.createFoodPerMeal(idMeal, idFood, idMeasure, quantity)
+      })
+    )
+
+    res.json({ status: "success", message: `The meal with name: '${name}', was created` })
 
   } catch (error) {
     res.status(400).json({ status: "error", message: error })
@@ -171,6 +195,7 @@ const updateFood = async (req, res) => {
 module.exports = {
   createPerson,
   createFood,
+  createMeal,
   getPersonsWeights,
   getFoods,
   getPersonWeights,
