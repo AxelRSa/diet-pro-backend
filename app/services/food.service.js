@@ -38,7 +38,7 @@ const getFoodsByIdUserAndName = async (idUser, name) => {
   } catch (error) { throw error }
 }
 
-const getFoodsByIdUserWithLimits = async (idUser, limitStart, limitEnd) => {
+const getFoodsByIdUserWithLimits = async (idUser, limitStart, items) => {
   try {
     const sql =
       `
@@ -49,7 +49,7 @@ const getFoodsByIdUserWithLimits = async (idUser, limitStart, limitEnd) => {
       ORDER BY f.name ASC
       LIMIT ?, ?
       `
-    return await query(sql, [idUser, limitStart, limitEnd])
+    return await query(sql, [idUser, limitStart, items])
   } catch (error) { throw error }
 }
 
@@ -64,7 +64,7 @@ const getFoodsCountByIdUser = async (idUser) => {
   } catch (error) { throw error }
 }
 
-const getFoodsByIdUserAndSearchWithLimits = async (idUser, limitStart, limitEnd, search) => {
+const getFoodsByIdUserAndSearchWithLimits = async (idUser, limitStart, items, search) => {
   try {
     const sql =
       `
@@ -75,11 +75,11 @@ const getFoodsByIdUserAndSearchWithLimits = async (idUser, limitStart, limitEnd,
       AND f.name LIKE ?
       LIMIT ?, ?
       `
-    return await query(sql, [idUser, `%${search}%`, limitStart, limitEnd])
+    return await query(sql, [idUser, `%${search}%`, limitStart, items])
   } catch (error) { throw error }
 }
 
-const getFoodsCountByIdUserAndSearch = async (idUser, search, limitStart, limitEnd) => {
+const getFoodsCountByIdUserAndSearch = async (idUser, search) => {
   try {
     const sql =
       `
@@ -87,7 +87,7 @@ const getFoodsCountByIdUserAndSearch = async (idUser, search, limitStart, limitE
       WHERE id_user = ?
       AND name LIKE ?
       `
-    return await query(sql, [idUser, `%${search}%`, limitStart, limitEnd])
+    return await query(sql, [idUser, `%${search}%`])
   } catch (error) { throw error }
 }
 

@@ -1,4 +1,3 @@
-const { paginationStart, paginationEnd, howManyPagesAre } = require("../../helpers/paginationHelper")
 const { generateDashboardPersonStructure, generateFoodStructure, generateMealStructure } = require("../../helpers/handleArraysAndObjects")
 
 const personService = require('../../services/person.service');
@@ -86,8 +85,7 @@ const getFoods = async (req, res) => {
     const { search, pagination } = req.query
 
     const ITEMS_PER_PAGINATION = 10
-    const limitStart = paginationStart(pagination, ITEMS_PER_PAGINATION)
-    const limitEnd = paginationEnd(pagination, ITEMS_PER_PAGINATION)
+    const limitStart = ITEMS_PER_PAGINATION * (pagination - 1)
     let dbResponse = null
     let paginationResponse = null
     let howManyPaginationAre = null
@@ -96,11 +94,11 @@ const getFoods = async (req, res) => {
     if (!search) {
       paginationResponse = await foodService.getFoodsCountByIdUser(idUser)
       howManyPaginationAre = howManyPagesAre(paginationResponse[0].count, ITEMS_PER_PAGINATION)
-      dbResponse = await foodService.getFoodsByIdUserWithLimits(idUser, limitStart, limitEnd)
+      dbResponse = await foodService.getFoodsByIdUserWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION)
     } else {
       paginationResponse = await foodService.getFoodsCountByIdUserAndSearch(idUser)
       howManyPaginationAre = howManyPagesAre(paginationResponse[0].count, ITEMS_PER_PAGINATION)
-      dbResponse = await foodService.getFoodsByIdUserAndSearchWithLimits(idUser, limitStart, limitEnd, search)
+      dbResponse = await foodService.getFoodsByIdUserAndSearchWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION, search)
     }
 
 
