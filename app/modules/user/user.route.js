@@ -16,6 +16,7 @@ router.get("/:idUser/person-weight", checkAuth, validation.getPersonsWeights, co
 router.get("/:idUser/food", checkAuth, validation.getFoods, controller.getFoods)
 router.get("/:idUser/person/:idPerson/person-weight", checkAuth, validation.getPersonWeights, controller.getPersonWeights)
 router.get("/:idUser/food/:idFood", checkAuth, validation.getFood, controller.getFood)
+router.get("/:idUser/meal", checkAuth, validation.getMeals, controller.getMeals)
 
 // update
 router.put("/:idUser/person/:idPerson", checkAuth, validation.updatePersonName, controller.updatePersonName)

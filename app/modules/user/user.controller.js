@@ -1,5 +1,5 @@
 const { paginationStart, paginationEnd, howManyPagesAre } = require("../../helpers/paginationHelper")
-const { generateDashboardPersonStructure, generateFoodStructure } = require("../../helpers/handleArraysAndObjects")
+const { generateDashboardPersonStructure, generateFoodStructure, generateMealStructure } = require("../../helpers/handleArraysAndObjects")
 
 const personService = require('../../services/person.service');
 const foodService = require("../../services/food.service")
@@ -158,6 +158,41 @@ const getFood = async (req, res) => {
   }
 }
 
+const getMeals = async (req, res) => {
+  try {
+    const { idUser } = req.params
+    const { search, pagination } = req.query
+
+    const ITEMS_PER_PAGINATION = 10
+    const limitStart = ITEMS_PER_PAGINATION * (pagination - 1)
+    let dbResponse = null
+    let paginationResponse = null
+    let howManyPaginationAre = null
+
+    if (!search) {
+      paginationResponse = await mealService.getMealsCountByIdUser(idUser)
+      howManyPaginationAre = howManyPagesAre(paginationResponse[0].count, ITEMS_PER_PAGINATION)
+      dbResponse = await mealService.getMealsByIdUserWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION)
+    } else {
+      paginationResponse = await mealService.getMealsCountByIdUserAndSearch(idUser)
+      howManyPaginationAre = howManyPagesAre(paginationResponse[0].count, ITEMS_PER_PAGINATION)
+      dbResponse = await mealService.getMealsByIdUserAndSearchWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION, search)
+    }
+
+    const data = {
+      meals: generateMealStructure(dbResponse),
+      pagination: {
+        current: parseInt(pagination),
+        exist: howManyPaginationAre
+      }
+    }
+
+    res.json({ status: "success", data })
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error })
+  }
+}
+
 // update
 const updatePersonName = async (req, res) => {
   try {
@@ -200,6 +235,7 @@ module.exports = {
   getFoods,
   getPersonWeights,
   getFood,
+  getMeals,
   updatePersonName,
   updateFood
 }
