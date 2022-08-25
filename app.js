@@ -20,6 +20,7 @@ app.use("/api/auth", require("./app/modules/auth/auth.route"))
 app.use("/api/user", require("./app/modules/user/user.route"))
 app.use("/api/person", require("./app/modules/person/person.route"))
 app.use("/api/food", require("./app/modules/food/food.route"))
+app.use("/api/meal", require("./app/modules/meal/meal.route"))
 
 // server initialization
 app.listen(process.env.PORT, () => {

@@ -42,9 +42,20 @@ const getMealsByIdUserAndName = async (idUser, name) => {
 
 // update
 // delete
+const deleteMealByIdMeal = async (idMeal) => {
+  try {
+    const sql =
+      `
+      DELETE FROM meals
+      WHERE id_meal = ?
+      `
+    return await query(sql, [idMeal])
+  } catch (error) { throw error }
+}
 
 module.exports = {
   createMeal,
   createFoodPerMeal,
-  getMealsByIdUserAndName
+  getMealsByIdUserAndName,
+  deleteMealByIdMeal
 }
