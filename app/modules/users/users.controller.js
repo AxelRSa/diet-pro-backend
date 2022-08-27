@@ -1,8 +1,8 @@
 const { generateDashboardPersonStructure, generateFoodStructure, generateMealStructure } = require("../../helpers/handleArraysAndObjects")
 
-const personService = require('../../services/person.service');
-const foodService = require("../../services/food.service")
-const mealService = require("../../services/meal.service")
+const personsService = require('../../services/persons.service');
+const foodsService = require("../../services/foods.service")
+const mealsService = require("../../services/meals.service")
 
 // create
 const createPerson = async (req, res) => {
@@ -10,10 +10,10 @@ const createPerson = async (req, res) => {
     const { idUser } = req.params
     const { name } = req.body
 
-    const personWithThatName = await personService.getPersonByIdUserAndName(idUser, name)
+    const personWithThatName = await personsService.getPersonByIdUserAndName(idUser, name)
     if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
 
-    await personService.createPerson(idUser, name)
+    await personsService.createPerson(idUser, name)
 
     res.json({ status: "success", message: `The person ${name} was created` })
 
@@ -27,10 +27,10 @@ const createFood = async (req, res) => {
     const { idUser } = req.params
     const { name, protein, carbohydrates, fat } = req.body
 
-    const foodsWithThatName = await foodService.getFoodsByIdUserAndName(idUser, name)
+    const foodsWithThatName = await foodsService.getFoodsByIdUserAndName(idUser, name)
     if (foodsWithThatName.length >= 1) throw "That name exists, please, choose another one"
 
-    await foodService.createFood(idUser, name, protein, carbohydrates, fat)
+    await foodsService.createFood(idUser, name, protein, carbohydrates, fat)
 
     res.json({ status: "success", message: `The food with name: ${name}, was created` })
 
@@ -44,14 +44,14 @@ const createMeal = async (req, res) => {
     const { idUser } = req.params
     const { name, measure, foods } = req.body
 
-    const mealsWithThatName = await mealService.getMealsByIdUserAndName(idUser, name)
+    const mealsWithThatName = await mealsService.getMealsByIdUserAndName(idUser, name)
     if (mealsWithThatName.length >= 1) throw "That name exists, please, choose another one"
 
-    const { insertId: idMeal } = await mealService.createMeal(idUser, name, measure)
+    const { insertId: idMeal } = await mealsService.createMeal(idUser, name, measure)
 
     await Promise.all(
       foods.map(({ idFood, idMeasure, quantity }) => {
-        return mealService.createFoodPerMeal(idMeal, idFood, idMeasure, quantity)
+        return mealsService.createFoodPerMeal(idMeal, idFood, idMeasure, quantity)
       })
     )
 
@@ -68,7 +68,7 @@ const getPersonsWeights = async (req, res) => {
     const { idUser } = req.params
     const { firstDate, secondDate } = req.query
 
-    const personsData = await personService.getPersonsWeightsByUserId(idUser, firstDate, secondDate)
+    const personsData = await personsService.getPersonsWeightsByUserId(idUser, firstDate, secondDate)
 
     const arrayModified = generateDashboardPersonStructure(personsData)
 
@@ -92,13 +92,13 @@ const getFoods = async (req, res) => {
 
 
     if (!search) {
-      paginationResponse = await foodService.getFoodsCountByIdUser(idUser)
+      paginationResponse = await foodsService.getFoodsCountByIdUser(idUser)
       howManyPaginationAre = Math.ceil(paginationResponse[0].count / ITEMS_PER_PAGINATION)
-      dbResponse = await foodService.getFoodsByIdUserWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION)
+      dbResponse = await foodsService.getFoodsByIdUserWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION)
     } else {
-      paginationResponse = await foodService.getFoodsCountByIdUserAndSearch(idUser)
+      paginationResponse = await foodsService.getFoodsCountByIdUserAndSearch(idUser)
       howManyPaginationAre = Math.ceil(paginationResponse[0].count / ITEMS_PER_PAGINATION)
-      dbResponse = await foodService.getFoodsByIdUserAndSearchWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION, search)
+      dbResponse = await foodsService.getFoodsByIdUserAndSearchWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION, search)
     }
 
 
@@ -121,7 +121,7 @@ const getPersonWeights = async (req, res) => {
     const { idUser, idPerson } = req.params
     const { firstDate, secondDate } = req.query
 
-    const response = await personService.getPersonWeightsByIdPerson(idUser, idPerson, firstDate, secondDate)
+    const response = await personsService.getPersonWeightsByIdPerson(idUser, idPerson, firstDate, secondDate)
 
     const personObject = {
       name: response[0].name,
@@ -142,7 +142,7 @@ const getFood = async (req, res) => {
   try {
     const { idUser, idFood } = req.params
 
-    const response = await foodService.getFoodByIdUserAndIdFood(idUser, idFood)
+    const response = await foodsService.getFoodByIdUserAndIdFood(idUser, idFood)
 
     const food = generateFoodStructure(response)
 
@@ -168,13 +168,13 @@ const getMeals = async (req, res) => {
     let howManyPaginationAre = null
 
     if (!search) {
-      paginationResponse = await mealService.getMealsCountByIdUser(idUser)
+      paginationResponse = await mealsService.getMealsCountByIdUser(idUser)
       howManyPaginationAre = Math.ceil(paginationResponse[0].count / ITEMS_PER_PAGINATION)
-      dbResponse = await mealService.getMealsByIdUserWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION)
+      dbResponse = await mealsService.getMealsByIdUserWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION)
     } else {
-      paginationResponse = await mealService.getMealsCountByIdUserAndSearch(idUser)
+      paginationResponse = await mealsService.getMealsCountByIdUserAndSearch(idUser)
       howManyPaginationAre = Math.ceil(paginationResponse[0].count / ITEMS_PER_PAGINATION)
-      dbResponse = await mealService.getMealsByIdUserAndSearchWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION, search)
+      dbResponse = await mealsService.getMealsByIdUserAndSearchWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION, search)
     }
 
     const data = {
@@ -197,10 +197,10 @@ const updatePersonName = async (req, res) => {
     const { idPerson, IdUser } = req.params
     const { name } = req.body
 
-    const personWithThatName = await personService.getPersonByIdUserAndName(IdUser, name)
+    const personWithThatName = await personsService.getPersonByIdUserAndName(IdUser, name)
     if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
 
-    await personService.updatePersonNameByIdPerson(idPerson, name)
+    await personsService.updatePersonNameByIdPerson(idPerson, name)
 
     res.json({ status: "success", message: `Now the name is ${name}` })
   } catch (error) {
@@ -213,10 +213,10 @@ const updateFood = async (req, res) => {
     const { idUser, idFood } = req.params
     const { name, carbohydrates, protein, fat } = req.body
 
-    const foodsWithThatName = await foodService.getFoodsByIdUserAndName(idUser, name)
+    const foodsWithThatName = await foodsService.getFoodsByIdUserAndName(idUser, name)
     if (foodsWithThatName.length >= 1 && foodsWithThatName[0].name !== name) throw new Error("That name exists, please, choose another one")
 
-    await foodService.updateFoodByIdFood(idFood, name, carbohydrates, protein, fat)
+    await foodsService.updateFoodByIdFood(idFood, name, carbohydrates, protein, fat)
 
     res.json({ status: "success", message: `The info of '${name}' measure was updated` })
   } catch (error) {

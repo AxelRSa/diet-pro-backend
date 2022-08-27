@@ -3,8 +3,8 @@ const router = express.Router()
 
 const { checkAuth } = require("../../middleware/auth")
 
-const controller = require("./meal.controller")
-const validation = require("./meal.validation")
+const controller = require("./meals.controller")
+const validation = require("./meals.validation")
 
 // create
 

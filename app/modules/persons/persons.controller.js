@@ -1,4 +1,4 @@
-const personService = require("../../services/person.service")
+const personsService = require("../../services/persons.service")
 
 // create
 const createPersonWeight = async (req, res) => {
@@ -6,7 +6,7 @@ const createPersonWeight = async (req, res) => {
     const { idPerson } = req.params
     const { weight, date } = req.body
 
-    personService.createPersonWeightByIdPerson(idPerson, weight, date)
+    personsService.createPersonWeightByIdPerson(idPerson, weight, date)
 
     res.json({ status: "success", message: "Your information was received" })
 
@@ -24,7 +24,7 @@ const updatePersonWeight = async (req, res) => {
     const { idPerson } = req.params
     const { weight, date } = req.body
 
-    await personService.updatePersonWeightByIdPersonAndDate(idPerson, weight, date)
+    await personsService.updatePersonWeightByIdPersonAndDate(idPerson, weight, date)
 
     res.json({ status: "success", message: "The weight was updated" })
   } catch (error) {

@@ -1,4 +1,4 @@
-const mealService = require("../../services/meal.service")
+const mealsService = require("../../services/meals.service")
 
 // create
 
@@ -13,7 +13,7 @@ const deleteMeal = async (req, res) => {
 
     // send error if the meal is used in other meals, plans, days, etc...
 
-    await mealService.deleteMealByIdMeal(idMeal)
+    await mealsService.deleteMealByIdMeal(idMeal)
 
     res.json({ status: "success", message: `The meal was deleted` })
 

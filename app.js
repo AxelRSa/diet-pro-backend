@@ -17,10 +17,10 @@ app.use(morgan('tiny'))
 
 // use routes
 app.use("/api/auth", require("./app/modules/auth/auth.route"))
-app.use("/api/user", require("./app/modules/user/user.route"))
-app.use("/api/person", require("./app/modules/person/person.route"))
-app.use("/api/food", require("./app/modules/food/food.route"))
-app.use("/api/meal", require("./app/modules/meal/meal.route"))
+app.use("/api/users", require("./app/modules/users/users.route"))
+app.use("/api/persons", require("./app/modules/persons/persons.route"))
+app.use("/api/foods", require("./app/modules/foods/foods.route"))
+app.use("/api/meals", require("./app/modules/meals/meals.route"))
 
 // server initialization
 app.listen(process.env.PORT, () => {

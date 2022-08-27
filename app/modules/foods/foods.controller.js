@@ -1,4 +1,4 @@
-const foodService = require("../../services/food.service")
+const foodsService = require("../../services/foods.service")
 
 // create
 const createFoodMeasure = async (req, res) => {
@@ -6,10 +6,10 @@ const createFoodMeasure = async (req, res) => {
     const { idFood } = req.params
     const { name, quantity } = req.body
 
-    const foodMeasureWithThatName = await foodService.getFoodMeasuresByIdFoodAndName(idFood, name)
+    const foodMeasureWithThatName = await foodsService.getFoodMeasuresByIdFoodAndName(idFood, name)
     if (foodMeasureWithThatName.length >= 1) throw "That measure exists, please, choose another one"
 
-    await foodService.createFoodMeasure(idFood, name, quantity)
+    await foodsService.createFoodMeasure(idFood, name, quantity)
 
     res.json({ status: "success", message: `The measure ${name} was created` })
 
@@ -25,10 +25,10 @@ const updateFoodMeasure = async (req, res) => {
     const { idFood, idMeasure } = req.params
     const { name, quantity } = req.body
 
-    const foodMeasureWithThatName = await foodService.getFoodMeasuresByIdFoodAndName(idFood, name)
+    const foodMeasureWithThatName = await foodsService.getFoodMeasuresByIdFoodAndName(idFood, name)
     if (foodMeasureWithThatName.length >= 1 && foodMeasureWithThatName[0].measure_name !== name) throw "That measure exists, please, choose another one"
 
-    await foodService.updateFoodMeasureByIdMeasure(idMeasure, name, quantity)
+    await foodsService.updateFoodMeasureByIdMeasure(idMeasure, name, quantity)
 
     res.json({ status: "success", message: `The measure ${name} was updated` })
 
@@ -41,7 +41,7 @@ const deleteFoodMeasure = async (req, res) => {
   try {
     const { idMeasure } = req.params
 
-    await foodService.deleteFoodMeasureByIdMeasure(idMeasure)
+    await foodsService.deleteFoodMeasureByIdMeasure(idMeasure)
 
     res.json({ status: "success", message: `The measure was deleted` })
 
@@ -56,7 +56,7 @@ const deleteFood = async (req, res) => {
 
     // send error if the food is used in other meals, plans, days, etc...
 
-    await foodService.deleteFoodByIdFood(idFood)
+    await foodsService.deleteFoodByIdFood(idFood)
 
     res.json({ status: "success", message: `The food was deleted` })
 

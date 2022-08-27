@@ -1,4 +1,4 @@
-const userService = require('../../services/user.service');
+const usersService = require('../../services/users.service');
 const { encrypt, compare } = require("../../helpers/handleBcrypt")
 const { tokenSign, verifyToken } = require("../../helpers/generateToken")
 
@@ -6,7 +6,7 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body
 
-    const userData = await userService.getUserByEmail(email)
+    const userData = await usersService.getUserByEmail(email)
     if (userData.length === 0) throw "The email is not registered, create an account"
 
     const user = userData[0]
@@ -27,11 +27,11 @@ const signup = async (req, res) => {
   try {
     const { email, password, username } = req.body
 
-    const emailExist = await userService.getEmailByEmail(email)
+    const emailExist = await usersService.getEmailByEmail(email)
     if (emailExist.length > 0) throw "The email exist, try with another"
 
     const hashedPassword = await encrypt(password)
-    await userService.createUser(email, hashedPassword, username)
+    await usersService.createUser(email, hashedPassword, username)
 
     res.json({ status: "success", message: "The user was created successfully" })
 
@@ -45,7 +45,7 @@ const getUser = async (req, res) => {
     const token = req.headers.authorization.split(" ").pop()
     const { id: idUser } = await verifyToken(token)
 
-    const [{ username, email }] = await userService.getUserById(idUser)
+    const [{ username, email }] = await usersService.getUserById(idUser)
 
     res.json({ status: "success", data: { user: {email, idUser, username} } })
 
