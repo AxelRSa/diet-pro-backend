@@ -12,10 +12,10 @@ const createMeal = async (idUser, name, measure) => {
       VALUES (?, ?, ?)
       `
     return await query(sql, [idUser, name, measure])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
-const createFoodPerMeal  = async (idMeal, idFood, idMeasure, quantity) => {
+const createFoodPerMeal = async (idMeal, idFood, idMeasure, quantity) => {
   try {
     const sql =
       `
@@ -23,7 +23,7 @@ const createFoodPerMeal  = async (idMeal, idFood, idMeasure, quantity) => {
       VALUES (?, ?, ?, ?)
       `
     return await query(sql, [idMeal, idFood, idMeasure, quantity])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 // read
@@ -37,7 +37,7 @@ const getMealsByIdUserAndName = async (idUser, name) => {
       AND name = ?
       `
     return await query(sql, [idUser, name])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getMealsCountByIdUser = async (idUser) => {
@@ -48,7 +48,7 @@ const getMealsCountByIdUser = async (idUser) => {
       WHERE id_user = ?
       `
     return await query(sql, [idUser])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getMealsByIdUserWithLimits = async (idUser, limitStart, items) => {
@@ -77,10 +77,10 @@ const getMealsByIdUserWithLimits = async (idUser, limitStart, items) => {
       LEFT JOIN foods_measures fm ON fm.id_food_measure = fpm.id_food_measure
       `
     return await query(sql, [idUser, limitStart, items])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
-const getMealsCountByIdUserAndSearch = async (idUser, search)=> {
+const getMealsCountByIdUserAndSearch = async (idUser, search) => {
   try {
     const sql =
       `
@@ -89,7 +89,7 @@ const getMealsCountByIdUserAndSearch = async (idUser, search)=> {
       AND name LIKE ?
       `
     return await query(sql, [idUser, `%${search}%`])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getMealsByIdUserAndSearchWithLimits = async (idUser, limitStart, items, search) => {
@@ -119,7 +119,7 @@ const getMealsByIdUserAndSearchWithLimits = async (idUser, limitStart, items, se
       LEFT JOIN foods_measures fm ON fm.id_food_measure = fpm.id_food_measure
       `
     return await query(sql, [idUser, `%${search}%`, limitStart, items])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 // update
@@ -132,7 +132,7 @@ const deleteMealByIdMeal = async (idMeal) => {
       WHERE id_meal = ?
       `
     return await query(sql, [idMeal])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 module.exports = {

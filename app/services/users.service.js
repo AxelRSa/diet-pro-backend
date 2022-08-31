@@ -11,7 +11,7 @@ const createUser = async (email, password, username) => {
       VALUES (?, ?, ?)
       `
     return await query(sql, [email, username, password])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getUserById = async (idUser) => {
@@ -23,7 +23,7 @@ const getUserById = async (idUser) => {
       WHERE id_user = ?
       `
     return await query(sql, [idUser])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getUserByEmail = async (email) => {
@@ -35,7 +35,7 @@ const getUserByEmail = async (email) => {
       WHERE email = ?
       `
     return await query(sql, [email])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getEmailByEmail = async (email) => {
@@ -46,7 +46,7 @@ const getEmailByEmail = async (email) => {
       WHERE email = ?
       `
     return await query(sql, [email])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 

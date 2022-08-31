@@ -12,7 +12,7 @@ const createFood = async (idUser, name, protein, carbohydrates, fat) => {
       VALUES (?, ?, ?, ?, ?)
       `
     return await query(sql, [idUser, name, protein, carbohydrates, fat])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const createFoodMeasure = async (idFood, name, quantity) => {
@@ -23,7 +23,7 @@ const createFoodMeasure = async (idFood, name, quantity) => {
       VALUES (?, ?, ?)
       `
     return await query(sql, [idFood, name, quantity])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 // read
 const getFoodsByIdUserAndName = async (idUser, name) => {
@@ -35,7 +35,7 @@ const getFoodsByIdUserAndName = async (idUser, name) => {
       AND name = ?
       `
     return await query(sql, [idUser, name])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getFoodsByIdUserWithLimits = async (idUser, limitStart, items) => {
@@ -50,7 +50,7 @@ const getFoodsByIdUserWithLimits = async (idUser, limitStart, items) => {
       LIMIT ?, ?
       `
     return await query(sql, [idUser, limitStart, items])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getFoodsCountByIdUser = async (idUser) => {
@@ -61,7 +61,7 @@ const getFoodsCountByIdUser = async (idUser) => {
       WHERE id_user = ?
       `
     return await query(sql, [idUser])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getFoodsByIdUserAndSearchWithLimits = async (idUser, limitStart, items, search) => {
@@ -76,7 +76,7 @@ const getFoodsByIdUserAndSearchWithLimits = async (idUser, limitStart, items, se
       LIMIT ?, ?
       `
     return await query(sql, [idUser, `%${search}%`, limitStart, items])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getFoodsCountByIdUserAndSearch = async (idUser, search) => {
@@ -88,7 +88,7 @@ const getFoodsCountByIdUserAndSearch = async (idUser, search) => {
       AND name LIKE ?
       `
     return await query(sql, [idUser, `%${search}%`])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getFoodByIdUserAndIdFood = async (idUser, idFood) => {
@@ -102,7 +102,7 @@ const getFoodByIdUserAndIdFood = async (idUser, idFood) => {
       AND f.id_food = ?
       `
     return await query(sql, [idUser, idFood])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getFoodMeasuresByIdFoodAndName = async (idFood, name) => {
@@ -114,7 +114,7 @@ const getFoodMeasuresByIdFoodAndName = async (idFood, name) => {
       AND measure_name = ?
       `
     return await query(sql, [idFood, name])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 // update
 const updateFoodByIdFood = async (idFood, name, carbohydrates, protein, fat) => {
@@ -126,7 +126,7 @@ const updateFoodByIdFood = async (idFood, name, carbohydrates, protein, fat) => 
       WHERE id_food = ?
       `
     return await query(sql, [name, carbohydrates, protein, fat, idFood])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const updateFoodMeasureByIdMeasure = async (idMeasure, name, quantity) => {
@@ -138,7 +138,7 @@ const updateFoodMeasureByIdMeasure = async (idMeasure, name, quantity) => {
       WHERE id_food_measure = ?
       `
     return await query(sql, [name, quantity, idMeasure])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 // delete
@@ -150,7 +150,7 @@ const deleteFoodMeasureByIdMeasure = async (idMeasure) => {
       WHERE id_food_measure = ?
       `
     return await query(sql, [idMeasure])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const deleteFoodByIdFood = async (idFood) => {
@@ -161,7 +161,7 @@ const deleteFoodByIdFood = async (idFood) => {
       WHERE id_food = ?
       `
     return await query(sql, [idFood])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 

@@ -13,7 +13,7 @@ const createPerson = async (idUser, name) => {
       VALUES (?, ?)
       `
     return await query(sql, [idUser, name])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const createPersonWeightByIdPerson = async (idPerson, weight, date) => {
@@ -24,7 +24,7 @@ const createPersonWeightByIdPerson = async (idPerson, weight, date) => {
       VALUES (?, ?, ?)
       `
     return await query(sql, [idPerson, weight, date])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 // read
@@ -39,7 +39,7 @@ const getPersonByIdUserAndName = async (idUser, name) => {
       AND name = ?
       `
     return await query(sql, [idUser, name])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getPersonWeightsByIdPerson = async (idUser, idPerson, firstDate, secondDate) => {
@@ -60,7 +60,7 @@ const getPersonWeightsByIdPerson = async (idUser, idPerson, firstDate, secondDat
       ORDER BY pw.date ASC
       `
     return await query(sql, [idPerson, firstDate, secondDate, idPerson, idUser])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const getPersonsWeightsByUserId = async (idUser, firstDate, secondDate) => {
@@ -79,7 +79,7 @@ const getPersonsWeightsByUserId = async (idUser, firstDate, secondDate) => {
       ORDER BY pw.date ASC
       `
     return await query(sql, [firstDate, secondDate, idUser])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 // update
@@ -94,7 +94,7 @@ const updatePersonWeightByIdPersonAndDate = async (idPerson, weight, date) => {
       AND date = ?
       `
     return await query(sql, [weight, idPerson, date])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 const updatePersonNameByIdPerson = async (idPerson, name) => {
@@ -106,7 +106,7 @@ const updatePersonNameByIdPerson = async (idPerson, name) => {
       WHERE id_person = ?
       `
     return await query(sql, [name, idPerson])
-  } catch (error) { throw error }
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
 // remove
