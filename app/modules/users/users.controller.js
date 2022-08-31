@@ -11,7 +11,7 @@ const createPerson = async (req, res) => {
     const { name } = req.body
 
     const personWithThatName = await personsService.getPersonByIdUserAndName(idUser, name)
-    if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
+    if (personWithThatName.length >= 1) throw new Error("That name exists, please, choose another one")
 
     await personsService.createPerson(idUser, name)
 
@@ -28,7 +28,7 @@ const createFood = async (req, res) => {
     const { name, protein, carbohydrates, fat } = req.body
 
     const foodsWithThatName = await foodsService.getFoodsByIdUserAndName(idUser, name)
-    if (foodsWithThatName.length >= 1) throw "That name exists, please, choose another one"
+    if (foodsWithThatName.length >= 1) throw new Error("That name exists, please, choose another one")
 
     await foodsService.createFood(idUser, name, protein, carbohydrates, fat)
 
@@ -45,7 +45,7 @@ const createMeal = async (req, res) => {
     const { name, measure, foods } = req.body
 
     const mealsWithThatName = await mealsService.getMealsByIdUserAndName(idUser, name)
-    if (mealsWithThatName.length >= 1) throw "That name exists, please, choose another one"
+    if (mealsWithThatName.length >= 1) throw new Error("That name exists, please, choose another one")
 
     const { insertId: idMeal } = await mealsService.createMeal(idUser, name, measure)
 
@@ -198,7 +198,7 @@ const updatePersonName = async (req, res) => {
     const { name } = req.body
 
     const personWithThatName = await personsService.getPersonByIdUserAndName(IdUser, name)
-    if (personWithThatName.length >= 1) throw "That name exists, please, choose another one"
+    if (personWithThatName.length >= 1) throw new Error("That name exists, please, choose another one")
 
     await personsService.updatePersonNameByIdPerson(idPerson, name)
 

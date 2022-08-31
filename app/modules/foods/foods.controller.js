@@ -7,7 +7,7 @@ const createFoodMeasure = async (req, res) => {
     const { name, quantity } = req.body
 
     const foodMeasureWithThatName = await foodsService.getFoodMeasuresByIdFoodAndName(idFood, name)
-    if (foodMeasureWithThatName.length >= 1) throw "That measure exists, please, choose another one"
+    if (foodMeasureWithThatName.length >= 1) throw new Error("That measure exists, please, choose another one")
 
     await foodsService.createFoodMeasure(idFood, name, quantity)
 
@@ -26,7 +26,7 @@ const updateFoodMeasure = async (req, res) => {
     const { name, quantity } = req.body
 
     const foodMeasureWithThatName = await foodsService.getFoodMeasuresByIdFoodAndName(idFood, name)
-    if (foodMeasureWithThatName.length >= 1 && foodMeasureWithThatName[0].measure_name !== name) throw "That measure exists, please, choose another one"
+    if (foodMeasureWithThatName.length >= 1 && foodMeasureWithThatName[0].measure_name !== name) throw new Error("That measure exists, please, choose another one")
 
     await foodsService.updateFoodMeasureByIdMeasure(idMeasure, name, quantity)
 
