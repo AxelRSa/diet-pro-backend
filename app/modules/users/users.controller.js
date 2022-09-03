@@ -18,7 +18,7 @@ const createPerson = async (req, res) => {
     res.json({ status: "success", message: `The person ${name} was created` })
 
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 
@@ -35,7 +35,7 @@ const createFood = async (req, res) => {
     res.json({ status: "success", message: `The food with name: ${name}, was created` })
 
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 
@@ -58,7 +58,7 @@ const createMeal = async (req, res) => {
     res.json({ status: "success", message: `The meal with name: '${name}', was created` })
 
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 
@@ -112,7 +112,7 @@ const getFoods = async (req, res) => {
 
     res.json({ status: "success", data })
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 
@@ -187,7 +187,7 @@ const getMeals = async (req, res) => {
 
     res.json({ status: "success", data })
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 

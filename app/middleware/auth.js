@@ -7,7 +7,7 @@ const checkAuth = async (req, res, next) =>{
     if (tokenData) return next()
     throw new Error("Your token is invalid")
   } catch(error){
-    return res.status(409).json({ status: "error", message: error })
+    return res.status(409).json({ status: "error", message: error.message })
   }
 }
 

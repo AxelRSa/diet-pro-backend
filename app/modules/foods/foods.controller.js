@@ -14,7 +14,7 @@ const createFoodMeasure = async (req, res) => {
     res.json({ status: "success", message: `The measure ${name} was created` })
 
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 // read
@@ -33,7 +33,7 @@ const updateFoodMeasure = async (req, res) => {
     res.json({ status: "success", message: `The measure ${name} was updated` })
 
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 // delete
@@ -46,7 +46,7 @@ const deleteFoodMeasure = async (req, res) => {
     res.json({ status: "success", message: `The measure was deleted` })
 
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 
@@ -61,7 +61,7 @@ const deleteFood = async (req, res) => {
     res.json({ status: "success", message: `The food was deleted` })
 
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 

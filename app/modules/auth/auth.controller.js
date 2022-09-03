@@ -19,7 +19,7 @@ const login = async (req, res) => {
     res.json({ status: "success", message: "Your login was successful", data: { token } })
 
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 
@@ -36,7 +36,7 @@ const signup = async (req, res) => {
     res.json({ status: "success", message: "The user was created successfully" })
 
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 
@@ -50,7 +50,7 @@ const getUser = async (req, res) => {
     res.json({ status: "success", data: { user: {email, idUser, username} } })
 
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 

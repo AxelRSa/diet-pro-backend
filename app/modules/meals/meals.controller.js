@@ -18,7 +18,7 @@ const deleteMeal = async (req, res) => {
     res.json({ status: "success", message: `The meal was deleted` })
 
   } catch (error) {
-    res.status(400).json({ status: "error", message: error })
+    res.status(400).json({ status: "error", message: error.message })
   }
 }
 
