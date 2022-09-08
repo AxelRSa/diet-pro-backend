@@ -22,6 +22,7 @@ router.get("/:idUser/meals/:idMeal", checkAuth, validation.getMeal, controller.g
 // update
 router.put("/:idUser/persons/:idPerson", checkAuth, validation.updatePersonName, controller.updatePersonName)
 router.put("/:idUser/foods/:idFood", checkAuth, validation.updateFood, controller.updateFood)
+router.put("/:idUser/meals/:idMeal", checkAuth, validation.updateMeal, controller.updateMeal)
 
 // delete
 
