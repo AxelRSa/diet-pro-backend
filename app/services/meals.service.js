@@ -97,17 +97,17 @@ const getMealsByIdUserAndSearchWithLimits = async (idUser, limitStart, items, se
     const sql =
       `
       SELECT
-      m.id_meal AS idMeal,
-      m.name,
-      f.id_food AS idFood,
-      f.name as foodName,
-      f.carbohydrates,
-      f.protein,
-      f.fat,
-      fpm.quantity,
-      fm.id_food_measure AS idMeasure,
-      fm.measure_name,
-      fm.quantity AS measureQuantity
+        m.id_meal AS idMeal,
+        m.name,
+        f.id_food AS idFood,
+        f.name as foodName,
+        f.carbohydrates,
+        f.protein,
+        f.fat,
+        fpm.quantity,
+        fm.id_food_measure AS idMeasure,
+        fm.measure_name,
+        fm.quantity AS measureQuantity
       FROM (
         SELECT * FROM meals
         WHERE id_user = ?
@@ -119,6 +119,33 @@ const getMealsByIdUserAndSearchWithLimits = async (idUser, limitStart, items, se
       LEFT JOIN foods_measures fm ON fm.id_food_measure = fpm.id_food_measure
       `
     return await query(sql, [idUser, `%${search}%`, limitStart, items])
+  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
+}
+
+const getMealByIdUserAndIdMeal = async (idUser, idMeal) => {
+  try {
+    const sql =
+      `
+      SELECT
+        m.id_meal AS idMeal,
+        m.name,
+        f.id_food AS idFood,
+        f.name as foodName,
+        f.carbohydrates,
+        f.protein,
+        f.fat,
+        fpm.quantity,
+        fm.id_food_measure AS idMeasure,
+        fm.measure_name,
+        fm.quantity AS measureQuantity
+      FROM meals as m
+        LEFT JOIN foods_per_meal fpm ON fpm.id_meal = m.id_meal
+        LEFT JOIN foods f ON f.id_food = fpm.id_food
+        LEFT JOIN foods_measures fm ON fm.id_food_measure = fpm.id_food_measure
+      WHERE m.id_user = ?
+      AND m.id_meal = ?
+      `
+    return await query(sql, [idUser, idMeal])
   } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
@@ -142,6 +169,7 @@ module.exports = {
   getMealsCountByIdUser,
   getMealsCountByIdUserAndSearch,
   getMealsByIdUserAndSearchWithLimits,
+  getMealsByIdUserWithLimits,
+  getMealByIdUserAndIdMeal,
   deleteMealByIdMeal,
-  getMealsByIdUserWithLimits
 }

@@ -191,6 +191,24 @@ const getMeals = async (req, res) => {
   }
 }
 
+const getMeal = async (req, res) => {
+  try {
+    const { idUser, idMeal } = req.params
+
+    const response = await mealsService.getMealByIdUserAndIdMeal(idUser, idMeal)
+
+    const meal = generateMealStructure(response)
+
+    const data = {
+      meal: meal[0]
+    }
+
+    res.json({ status: "success", data })
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error.message })
+  }
+}
+
 // update
 const updatePersonName = async (req, res) => {
   try {
@@ -234,6 +252,7 @@ module.exports = {
   getPersonWeights,
   getFood,
   getMeals,
+  getMeal,
   updatePersonName,
   updateFood
 }
