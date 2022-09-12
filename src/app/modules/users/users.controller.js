@@ -96,7 +96,7 @@ const getFoods = async (req, res) => {
       howManyPaginationAre = Math.ceil(paginationResponse[0].count / ITEMS_PER_PAGINATION)
       dbResponse = await foodsService.getFoodsByIdUserWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION)
     } else {
-      paginationResponse = await foodsService.getFoodsCountByIdUserAndSearch(idUser)
+      paginationResponse = await foodsService.getFoodsCountByIdUserAndSearch(idUser, search)
       howManyPaginationAre = Math.ceil(paginationResponse[0].count / ITEMS_PER_PAGINATION)
       dbResponse = await foodsService.getFoodsByIdUserAndSearchWithLimits(idUser, limitStart, ITEMS_PER_PAGINATION, search)
     }
