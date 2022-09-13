@@ -241,31 +241,6 @@ const updateFood = async (req, res) => {
     res.status(400).json({ status: "error", message: error.message })
   }
 }
-
-const updateMeal = async (req, res) => {
-  try {
-    const { idUser, idMeal} = req.params
-    const { name, measure, foods } = req.body
-
-    const mealsWithThatName = await mealsService.getMealsByIdUserAndName(idUser, name)
-    if (mealsWithThatName.length >= 1) throw new Error("That name exists, please, choose another one")
-
-    await mealsService.updateMeal(idMeal, name, measure)
-
-    await mealsService.deleteFoodsPerMealByIdMeal(idMeal)
-
-    await Promise.all(
-      foods.map(({ idFood, idMeasure, quantity }) => {
-        return mealsService.createFoodPerMeal(idMeal, idFood, idMeasure, quantity)
-      })
-    )
-
-    res.json({ status: "success", message: `The meal '${name}' was updated` })
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({ status: "error", message: error.message })
-  }
-}
 // delete
 
 module.exports = {
@@ -279,6 +254,5 @@ module.exports = {
   getMeals,
   getMeal,
   updatePersonName,
-  updateFood,
-  updateMeal
+  updateFood
 }

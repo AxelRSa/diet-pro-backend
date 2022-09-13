@@ -150,18 +150,6 @@ const getMealByIdUserAndIdMeal = async (idUser, idMeal) => {
 }
 
 // update
-const updateMeal = async (idMeal, name, measure) => {
-  try {
-    const sql =
-      `
-      UPDATE meals
-      SET name = ?, measure = ?
-      WHERE id_meal = ?
-      `
-    return await query(sql, [name, measure, idMeal])
-  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
-}
-
 // delete
 const deleteMealByIdMeal = async (idMeal) => {
   try {
@@ -174,18 +162,6 @@ const deleteMealByIdMeal = async (idMeal) => {
   } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
-const deleteFoodsPerMealByIdMeal = async (idMeal) => {
-  try {
-    const sql =
-      `
-      DELETE FROM foods_per_meal
-      WHERE id_meal = ?
-      `
-    return await query(sql, [idMeal])
-  } catch (error) { console.log(error); throw new Error("Database error, contact support") }
-}
-
-
 module.exports = {
   createMeal,
   createFoodPerMeal,
@@ -195,7 +171,5 @@ module.exports = {
   getMealsByIdUserAndSearchWithLimits,
   getMealsByIdUserWithLimits,
   getMealByIdUserAndIdMeal,
-  updateMeal,
   deleteMealByIdMeal,
-  deleteFoodsPerMealByIdMeal
 }
