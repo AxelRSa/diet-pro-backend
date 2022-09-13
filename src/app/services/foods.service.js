@@ -1,9 +1,5 @@
 const connection = require('../../config/db');
 
-/**
- * @typedef {import('../helpers/FoodsObjects').FoodFromDataBase} FoodFromDataBase
- */
-
 const promisify = require("util").promisify
 const query = promisify(connection.query).bind(connection)
 
@@ -42,25 +38,11 @@ const getFoodsByIdUserAndName = async (idUser, name) => {
   } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
-/** Get foods by idUser with pagination
- * @param {Number} idUser id user
- * @param {Number} limitStart from where begin to take the query
- * @param {Number} items how many items we need
- * @returns {Promise< FoodFromDataBase[] | Error >}
- */
 const getFoodsByIdUserWithLimits = async (idUser, limitStart, items) => {
   try {
     const sql =
       `
-      SELECT
-        f.id_food,
-        f.name,
-        f.carbohydrates,
-        f.protein,
-        f.fat,
-        fm.name as measure_name,
-        fm.grams,
-        fm.id_food_measure
+      SELECT f.id_food as idFood, f.name, f.carbohydrates, f.protein, f.fat, fm.measure_name as measureName, fm.quantity, fm.id_food_measure as idMeasure
       FROM foods as f
       LEFT JOIN foods_measures as fm ON f.id_food = fm.id_food
       WHERE id_user = ?
@@ -71,10 +53,6 @@ const getFoodsByIdUserWithLimits = async (idUser, limitStart, items) => {
   } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
-/** Get foods count by IdUser
- * @param {Number} idUser id user
- * @returns {Promise< [{count: number}] | Error >}
- */
 const getFoodsCountByIdUser = async (idUser) => {
   try {
     const sql =
@@ -86,13 +64,6 @@ const getFoodsCountByIdUser = async (idUser) => {
   } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
-/** Get foods by idUser and search with pagination
- * @param {Number} idUser id user
- * @param {Number} limitStart from where begin to take the query
- * @param {Number} items how many items we need
- * @param {String} search query to search
- * @returns {Promise< FoodFromDataBase[] | Error >}
- */
 const getFoodsByIdUserAndSearchWithLimits = async (idUser, limitStart, items, search) => {
   try {
     const sql =
@@ -108,11 +79,6 @@ const getFoodsByIdUserAndSearchWithLimits = async (idUser, limitStart, items, se
   } catch (error) { console.log(error); throw new Error("Database error, contact support") }
 }
 
-/** Get foods count by IdUser
- * @param {Number} idUser id user
- * @param {String} search query to search
- * @returns {Promise< [{count: number}] | Error >}
- */
 const getFoodsCountByIdUserAndSearch = async (idUser, search) => {
   try {
     const sql =
