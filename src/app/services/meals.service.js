@@ -70,6 +70,7 @@ const getMealsByIdUserWithLimits = async (idUser, limitStart, items) => {
       FROM (
         SELECT * FROM meals
         WHERE id_user = ?
+        ORDER BY name ASC
         LIMIT ?, ?
         ) as m
       LEFT JOIN foods_per_meal fpm ON fpm.id_meal = m.id_meal
@@ -112,6 +113,7 @@ const getMealsByIdUserAndSearchWithLimits = async (idUser, limitStart, items, se
         SELECT * FROM meals
         WHERE id_user = ?
         AND name LIKE ?
+        ORDER BY name ASC
         LIMIT ?, ?
         ) as m
       LEFT JOIN foods_per_meal fpm ON fpm.id_meal = m.id_meal
