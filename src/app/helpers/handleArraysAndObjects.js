@@ -1,36 +1,32 @@
-/** Measure object
+/** measure object
  * @typedef {Object} Measure
- * @property  {Number | null}  idMeasure
+ * @property  {Number | null}  id
  * @property  {String}  name
  * @property  {Number}  quantity
  * @property  {Number}  grams
  */
 
-/** Create measure
- * @param  {Number} [quantity] quantity selected of that measure
+/** create measure
+ * @param  {Number | null} [id] measure id
  * @param  {String | undefined} [name] measure name
- * @param  {Number | null} [idMeasure] measure id
+ * @param  {Number} [quantity] quantity selected of that measure
  * @param  {Number} [grams] grams per unit
  * @return  {Measure}
  */
-const generateMeasure = (quantity = 100, name = "gr", idMeasure = null, grams = 100) => {
-  return {
-    quantity, name, idMeasure, grams
-  }
+const generateMeasure = (id = null, name = "gr", quantity = 100, grams = 100) => {
+  return { id, name, quantity, grams }
 }
 
-/** Food object
+/** food object
  * @typedef {Object} Food
- * @property  {Number}  idFood
+ * @property  {Number}  id
  * @property  {String}  name
- * @property  {Number}  carbohydrates
- * @property  {Number}  protein
- * @property  {Number}  fat
- * @property  {Measure[]}  [items]
+ * @property  {{protein: Number, fat: Number, carbohydrates: Number}}  nutritionalInformation
+ * @property  {Measure[]}  [measures]
  */
 
-/** Create food
- * @param  {Number} idFood
+/** create food
+ * @param  {Number} id
  * @param  {String} name
  * @param  {Number} carbohydrates
  * @param  {Number} protein
@@ -38,76 +34,63 @@ const generateMeasure = (quantity = 100, name = "gr", idMeasure = null, grams = 
  * @param  {Measure[]} [measures]
  * @return {Food}
  */
-const generateFood = (idFood, name, carbohydrates, protein, fat, measures) => {
-  if (!measures) { return { idFood, name, carbohydrates, protein, fat } }
-  return { idFood, name, carbohydrates, protein, fat, items: measures }
+const generateFood = (id, name, carbohydrates, protein, fat, measures) => {
+  if (!measures) { return { id, name, nutritionalInformation: { carbohydrates, protein, fat } } }
+  return { id, name, nutritionalInformation: { carbohydrates, protein, fat }, measures }
 }
 
-/** Meal object
- * @typedef {Object} Meal
- * @property  {Number}  idMeal
- * @property  {String}  name
- * @property  {Food[]}  [foods]
- */
-
-/** Create meals
- * @param {Number} idMeal
- * @param {String} name
- * @param {Food[]} [foods]
- * @return {Meal}
- */
-const generateMeal = (idMeal, name, foods) => {
-  return { idMeal, name, foods }
-}
-
-
-/** Function to generate foods arrays
+/** create food array from
  * @param   {Array} array
  * @returns {Food[]}
  */
 const generateFoodStructure = (array) => {
   return array
-    .map((item) => {
-      // search coincidence in the ones that have "measureName" and formatted them an put it in "items" new attribute
-      let newItems = null
-
-      if (item.measureName) {
-        newItems = array
-          .filter(({ idFood }) => idFood === item.idFood)
-          .map(({ measureName, quantity, idMeasure }) => generateMeasure(1, measureName, idMeasure, quantity))
+    .map((row) => {
+      if (!row.idMeasure) {
+        const { idFood, name, carbohydrates, protein, fat } = row
+        return generateFood(idFood, name, carbohydrates, protein, fat, [generateMeasure()])
       }
 
-      const { idFood, name, carbohydrates, protein, fat } = item
-      if (newItems === null) {
-        return generateFood(idFood, name, carbohydrates, protein, fat)
-      }
-      return generateFood(idFood, name, carbohydrates, protein, fat, newItems)
-    }, [])
+      const newItems = array
+        .filter(({ idFood }) => idFood === row.idFood)
+        .map(({ measureName, quantity, idMeasure }) => generateMeasure(idMeasure, measureName, 1, quantity))
+
+      const { idFood, name, carbohydrates, protein, fat } = row
+      return generateFood(idFood, name, carbohydrates, protein, fat, [generateMeasure(), ...newItems])
+    })
     // erase repeated ones
     .reduce((acc, current) => {
-      const foodNotExist = !acc.some(item => item.idFood === current.idFood)
+      const foodNotExist = !acc.some(item => item.id === current.id)
       if (foodNotExist) acc.push(current)
       return acc
     }, [])
 }
 
+/** meal object
+ * @typedef {Object} Meal
+ * @property  {Number}  id
+ * @property  {String}  name
+ * @property  {String}  measure
+ * @property  {Food[]}  [foods]
+ */
+
+/** create meals
+ * @param {Number} id
+ * @param {String} name
+ * @param {String} measure
+ * @param {Food[]} [foods]
+ * @return {Meal}
+ */
+const generateMeal = (id, name, measure, foods) => {
+  return { id, name, measure, foods }
+}
+
 /** generateMealStructure function
- * @param {{idMeal: number,
- *  name: string,
- *  idFood: number,
- *  foodName: string,
- *  carbohydrates: number,
- *  protein:number,
- *  fat: number,
- *  quantity: number,
- *  idMeasure: number,
- *  measure_name: string,
- *  measureQuantity: number}[]} array
+ * @param {Array} array
  * @returns {Meal[]}
  */
 const generateMealStructure = (array) => {
   return array
-    // give all format to response
     .map(register => {
       const { name, idMeal } = register
 
