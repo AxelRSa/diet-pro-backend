@@ -1,8 +1,14 @@
+/* Loading the environment variables from the .env file. */
+/* https://www.npmjs.com/package/dotenv */
+import * as dotenv from 'dotenv'
+import path from 'path'
+dotenv.config({path: path.resolve(process.cwd(), '.env')})
+
 /* Importing the libraries. */
-import express, { Express, Request, Response } from 'express'
-import dotenv from 'dotenv'
+import express, { Express } from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
+
 /* Importing the routes */
 import authRouter from './app/modules/auth/auth.router'
 
@@ -11,10 +17,6 @@ const app: Express = express()
 
 /* Setting the port to 5000 if the process.env.PORT is not set. */
 const port: number = Number(process.env.PORT) || 5000
-
-/* https://www.npmjs.com/package/dotenv */
-/* Loading the environment variables from the .env file. */
-dotenv.config()
 
 /* Middleware */
 /* A middleware that parses the body of the request and makes it available in the req.body property. */
