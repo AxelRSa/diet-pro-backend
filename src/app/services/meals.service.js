@@ -58,6 +58,7 @@ const getMealsByIdUserWithLimits = async (idUser, limitStart, items) => {
       SELECT
       m.id_meal AS idMeal,
       m.name,
+      m.measure,
       f.id_food AS idFood,
       f.name as foodName,
       f.carbohydrates,
