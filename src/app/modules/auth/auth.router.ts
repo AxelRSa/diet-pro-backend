@@ -3,12 +3,10 @@ const router = express.Router()
 
 // const { checkAuth } = require("../../middleware/auth")
 import * as controller from './auth.controllers'
-// const validation = require("./auth.validation")
+import * as validation from './auth.validation'
 
-
-router.post('/signup', controller.signup)
 // router.post("/login", validation.login, controller.login)
-// router.post("/signup", validation.signup, controller.signup)
+router.post('/signup', validation.signup, controller.signup)
 
 // router.get("/user", checkAuth, controller.getUser)
 
