@@ -8,7 +8,7 @@ import pool from '../../config/db'
  * @param name - name of the person
  * @returns The result of the query.
  */
-export const createPerson = async (idUser:number, name:string) => {
+export const createPerson = async (idUser:string, name:string) => {
   try {
     const sql =
       `
@@ -27,7 +27,7 @@ export const createPerson = async (idUser:number, name:string) => {
  * @param {string} name - name that the user provide
  * @returns An array of objects with the registers with that name property.
  */
-export const getPersonByIdUserAndName = async (idUser:number, name:string) => {
+export const getPersonByIdUserAndName = async (idUser:string, name:string) => {
   try {
     const sql =
       `
