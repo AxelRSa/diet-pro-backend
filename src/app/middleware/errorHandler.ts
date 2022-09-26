@@ -2,8 +2,7 @@ import { CustomError } from './../helpers/generateErrors'
 import { Request, Response, NextFunction } from 'express'
 
 /**
- * General Error Handler if the error is an instance of CustomError, return a response with the status and message from the
- * error. Otherwise, return a response with a 500 status and a generic error message.
+ * General custom error handler
  * @param err - This is the error object that was thrown.
  * @param _req - Request - The request object
  * @param res - Response - The response object
@@ -11,15 +10,10 @@ import { Request, Response, NextFunction } from 'express'
  * the next middleware function in the stack.
  * @returns return a response from the server
  */
-function errorHandler(err: CustomError | Error, _req: Request, res: Response, _next: NextFunction) {
-  if (err instanceof CustomError) {
-    return res
-      .status(err.status)
-      .json({ message: err.message })
-  }
+function errorHandler(err: CustomError, _req: Request, res: Response, _next: NextFunction) {
   return res
-    .status(500)
-    .json({ error: 'Internal server error, contact support' })
+    .status(err.status)
+    .json({ message: err.message })
 }
 
 export default errorHandler
