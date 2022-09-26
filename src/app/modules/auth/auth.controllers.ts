@@ -21,10 +21,7 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
   const hashedPassword = await encrypt(password)
   await usersService.createUser(email, hashedPassword, username)
 
-  const response = {
-    status: 'success',
-    message: 'The user was created successfully'
-  }
+  const response = { message: 'The user was created successfully'}
 
   return res.json(response)
 }
@@ -52,7 +49,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   const token = await tokenSign(user)
 
   const response = {
-    status: 'success',
     message: `Welcome ${user.usernameUser}`,
     data: { token }
   }
@@ -82,7 +78,6 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
   const [{ usernameUser: username, emailUser: email }] = await usersService.getUserById(id)
 
   const response = {
-    status: 'success',
     data: { user: { email, id, username } }
   }
 

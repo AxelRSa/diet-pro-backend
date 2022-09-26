@@ -15,10 +15,10 @@ export const createPerson = async (req: Request, res: Response, next:NextFunctio
   const { idUser } = req.params as {idUser:string}
   const { name } = req.body as {name:string}
 
-  /* Checking if the person exists and if not, create one. */
+  /* Checking if the person name exists and if not, create one. */
   const personWithThatName = await personsService.getPersonByIdUserAndName(idUser, name)
   if (personWithThatName.length >= 1) { return next(new CustomError(400, 'That name exists, please, choose another one')) }
   await personsService.createPerson(idUser, name)
 
-  return res.json({ status: 'success', message: `The person ${name} was created` })
+  return res.json({ message: `The person ${name} was created` })
 }
