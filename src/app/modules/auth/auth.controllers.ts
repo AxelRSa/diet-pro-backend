@@ -3,7 +3,7 @@ import { encrypt, compare } from '../../helpers/handleBcrypt'
 import * as usersService from '../../services/users.service'
 
 /**
- * signup controller
+ * signup controller check if the email already exists and encrypt the password
  * @param {Request} req - Request - The request object
  * @param {Response} res - Response - The response object that will be sent back to the client.
  * @returns The response is being returned.
