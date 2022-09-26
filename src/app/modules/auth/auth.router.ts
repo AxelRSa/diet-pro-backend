@@ -1,3 +1,4 @@
+import { checkAuth } from './../../middleware/auth'
 import express from 'express'
 const router = express.Router()
 
@@ -5,9 +6,9 @@ const router = express.Router()
 import * as controller from './auth.controllers'
 import * as validation from './auth.validation'
 
-// router.post("/login", validation.login, controller.login)
+router.post('/login', validation.login, controller.login)
 router.post('/signup', validation.signup, controller.signup)
 
-// router.get("/user", checkAuth, controller.getUser)
+router.get('/user', checkAuth, controller.getUser)
 
 export default router

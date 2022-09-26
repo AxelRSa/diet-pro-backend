@@ -4,10 +4,9 @@ import pool from '../../config/db'
 
 /**
  * It takes an email, username, and password, and inserts them into the database
- * todo give back the username to show it in a notification
- * @param {string} email - user email
- * @param {string} password - user password
- * @param {string} username - user username
+ * @param email - user email
+ * @param password - user password
+ * @param username - user username
  */
 export const createUser = async (email: string, password: string, username: string) => {
   try {
@@ -24,21 +23,59 @@ export const createUser = async (email: string, password: string, username: stri
 
 /**
  * Get an array of emails to know if there is another equal to the current email
- * @param {string} email - email to get equals
- * @returns {Promise<[RowDataPacket[], FieldPacket[]]>} an array of emails if the email exist
+ * @param email - email to get equals
+ * @returns an array of emails if the email exist
  */
 export const getEmailByEmail = async (email: string) => {
   try {
     const sql =
 			`
-      SELECT email FROM users
+      SELECT emailUser FROM users
       WHERE email = ?
       `
     const response = await pool.query(sql, [email])
-    return response[0] as {email: string}[]
+    return response[0] as {emailUser: string}[]
   } catch (error) { console.log(error); throw new Error('Database error, contact support') }
 }
 
-// update
+/**
+ * It returns an array of objects with the user properties email, password, username, and idUser.
+ * @param email - string
+ * @returns An array of users
+ */
+export const getUserByEmail = async (email:string) => {
+  try {
+    const sql =
+      `
+      SELECT 
+      email as emailUser ,
+      password as passwordUser ,
+      username as usernameUser ,
+      id_user as idUser
+      FROM users
+      WHERE email = ?
+      `
+    const response = await pool.query(sql, [email])
+    return response[0] as {emailUser: string, passwordUser: string, usernameUser: string, idUser:number}[]
+  } catch (error) { console.log(error); throw new Error('Database error, contact support') }
+}
 
-// delete
+export const getUserById = async (idUser: number) => {
+  try {
+    const sql =
+      `
+      SELECT 
+      email as emailUser , 
+      username as usernameUser , 
+      id_user as idUser
+      FROM users
+      WHERE id_user = ?
+      `
+    const response = await pool.query(sql, [idUser])
+    return response[0] as {emailUser: string, usernameUser: string, idUser:number}[]
+  } catch (error) { console.log(error); throw new Error('Database error, contact support') }
+}
+
+/* Update */ 
+
+/* Delete */ 

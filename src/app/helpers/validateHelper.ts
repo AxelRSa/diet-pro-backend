@@ -19,10 +19,9 @@ export const validateResult = (req:Request, res:Response, next:NextFunction) => 
   } catch (e) {
     const error = e as Result
 
+    /* Creating a string of the errors. */
     const arrayErrors = error.array().map(singleError => `${singleError.msg}: '${singleError.value}'`)
-
     let message = ''
-
     arrayErrors.forEach((errorMessage, index) => {
       message += `${index +1}: ${errorMessage}. `
     })
