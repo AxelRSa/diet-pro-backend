@@ -8,7 +8,7 @@ import { verifyToken } from '../helpers/generateToken'
  * @param next - This is a function that is called when the middleware is done.
  * @returns a function that is being used as a middleware.
  */
-export const checkAuth = async (req:Request, res: Response, next:NextFunction) =>{
+const checkAuth = async (req:Request, res: Response, next:NextFunction) =>{
   try{
     const token = req.headers.authorization?.split(' ').pop()
 
@@ -27,3 +27,4 @@ export const checkAuth = async (req:Request, res: Response, next:NextFunction) =
   }
 }
 
+export default checkAuth

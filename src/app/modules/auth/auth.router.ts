@@ -1,8 +1,7 @@
-import { checkAuth } from './../../middleware/auth'
 import express from 'express'
 const router = express.Router()
 
-// const { checkAuth } = require("../../middleware/auth")
+import checkAuth from './../../middleware/auth'
 import * as controller from './auth.controllers'
 import * as validation from './auth.validation'
 
