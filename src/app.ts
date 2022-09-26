@@ -13,6 +13,11 @@ import morgan from 'morgan'
 import authRouter from './app/modules/auth/auth.route'
 import usersRouter from './app/modules/users/users.route'
 
+
+/* Importing error middleware. */
+import errorHandler from './app/middleware/errorHandler'
+import logErrors from './app/middleware/errorLogger'
+
 /* Creating an instance of express. */
 const app: Express = express()
 
@@ -35,6 +40,10 @@ app.use('/api/users', usersRouter)
 // app.use("/api/persons", require("./app/modules/persons/persons.route"))
 // app.use("/api/foods", require("./app/modules/foods/foods.route"))
 // app.use("/api/meals", require("./app/modules/meals/meals.route"))
+
+/* Error handling middleware */
+app.use('*', logErrors)
+app.use('*', errorHandler)
 
 /* Starting the server. */
 app.listen(port, () => {
