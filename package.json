@@ -6,7 +6,8 @@
   "author": "AxelRSa <axelg.rizos@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\""
+    "dev": "concurrently \"tsc --watch\" \"nodemon -q dist/app.js\"",
+    "docs": "typedoc"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -30,7 +31,7 @@
     "eslint": "^8.24.0",
     "jsdoc": "^3.6.11",
     "nodemon": "^2.0.19",
-    "typedoc": "^0.23.14",
+    "typedoc": "^0.23.15",
     "typescript": "^4.8.3"
   }
 }
