@@ -10,7 +10,8 @@ import cors from 'cors'
 import morgan from 'morgan'
 
 /* Importing the routes */
-import authRouter from './app/modules/auth/auth.router'
+import authRouter from './app/modules/auth/auth.route'
+import usersRouter from './app/modules/users/users.route'
 
 /* Creating an instance of express. */
 const app: Express = express()
@@ -30,7 +31,7 @@ app.use(morgan('tiny'))
 
 /* Use routes */
 app.use('/api/auth', authRouter)
-// app.use("/api/users", require("./app/modules/users/users.route"))
+app.use('/api/users', usersRouter)
 // app.use("/api/persons", require("./app/modules/persons/persons.route"))
 // app.use("/api/foods", require("./app/modules/foods/foods.route"))
 // app.use("/api/meals", require("./app/modules/meals/meals.route"))
