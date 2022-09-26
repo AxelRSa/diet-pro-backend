@@ -30,7 +30,7 @@ export const getEmailByEmail = async (email: string) => {
   try {
     const sql =
 			`
-      SELECT emailUser FROM users
+      SELECT email as emailUser FROM users
       WHERE email = ?
       `
     const response = await pool.query(sql, [email])
