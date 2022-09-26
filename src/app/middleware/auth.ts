@@ -1,4 +1,5 @@
-import type { Request, Response, NextFunction  } from 'express'
+import { CustomError } from './../helpers/generateErrors'
+import type { Request, Response, NextFunction } from 'express'
 import { verifyToken } from '../helpers/generateToken'
 
 /**
@@ -8,23 +9,17 @@ import { verifyToken } from '../helpers/generateToken'
  * @param next - This is a function that is called when the middleware is done.
  * @returns a function that is being used as a middleware.
  */
-const checkAuth = async (req:Request, res: Response, next:NextFunction) =>{
-  try{
-    const token = req.headers.authorization?.split(' ').pop()
+const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers.authorization?.split(' ').pop()
 
-    /* Checking if the token is undefined, if it is, it throws an error. */
-    if (token === undefined) { throw new Error('The auth token was not send') }
-    
-    /* Checking if the token is valid, if it is, it allows the user to continue to the next middleware. If
-    it is not valid, it throws an error. */
-    const tokenData = await verifyToken(token)
-    if (tokenData) return next()
-    throw new Error('Your token is invalid')
-  } catch(error){
-    if (error instanceof Error) {
-      return res.status(409).json({ status: 'error', message: error.message })
-    }
-  }
+  /* Checking if the token is undefined, if it is, it throws an error. */
+  if (token === undefined) { return next(new CustomError(400, 'The auth token was not send')) }
+
+  /* Checking if the token is valid, if it is, it allows the user to continue to the next middleware. If
+  it is not valid, it throws an error. */
+  const tokenData = await verifyToken(token)
+  if (!tokenData) { return next(new CustomError(401, 'The auth token is invalid, log in again')) }
+  return next()
 }
 
 export default checkAuth
