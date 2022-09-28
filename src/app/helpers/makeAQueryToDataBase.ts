@@ -12,6 +12,7 @@ export const makeAQueryToDataBase = async <T>(functionQuery: () => Promise<[T, F
     return await functionQuery()
   } catch (error) {
     if (error instanceof Error) {
+      console.log(error.message)
       if (error.message.includes('Cannot delete or update a parent row')) {
         throw new CustomError(500, 'You use this register in other tables, erase it first')
       }
