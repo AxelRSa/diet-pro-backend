@@ -22,6 +22,18 @@ export const createPerson = async (idUser:string, namePerson:string) => {
   return dataFromDB
 }
 
+export const createPersonWeightByIdPerson = async (idPerson:string, weight:string, date:string) => {
+  const dataFromDB = await makeAQueryToDataBase<ResultSetHeader>(async () => {
+    const sql =
+      `
+      INSERT INTO person_weights (id_person, weight, date)
+      VALUES (?, ?, ?)
+			`
+    return await pool.query(sql, [idPerson, weight, date])
+  })
+  return dataFromDB
+}
+
 /* Read */
 
 /**
