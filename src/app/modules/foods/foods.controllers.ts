@@ -33,9 +33,6 @@ export const createFoodMeasure = async (req: Request, res: Response) => {
 export const deleteFood = async (req: Request, res: Response) => {
   const { idFood } = req.params as { idFood:string }
 
-  // ! urgent change 
-  // todo add methods to check if the register depends on others tables
-
   await foodsService.deleteFoodByIdFood(idFood)
 
   res.json({ message: 'The food was deleted' })
