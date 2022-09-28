@@ -1,6 +1,6 @@
 import { CustomError } from './../../helpers/generateErrors'
 import { tokenSign, verifyToken } from './../../helpers/generateToken'
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { encrypt, compare } from '../../helpers/handleBcrypt'
 import * as usersService from '../../services/users.service'
 
@@ -10,12 +10,12 @@ import * as usersService from '../../services/users.service'
  * @param res - Response - The response object that will be sent back to the client.
  * @returns The response is being returned.
  */
-export const signup = async (req: Request, res: Response, next: NextFunction) => {
+export const signup = async (req: Request, res: Response) => {
   const { email, password, username } = req.body as { email: string, password: string, username: string }
 
   /* Checking if the email exist in the database. */
   const emailsResponse = await usersService.getEmailByEmail(email)
-  if (emailsResponse.length > 0)  return next(new CustomError(400, 'The email exist, try with another'))
+  if (emailsResponse.length > 0)  throw new CustomError(400, 'The email exist, try with another')
 
   /* Encrypting the password and then creating the user. */
   const hashedPassword = await encrypt(password)
@@ -34,18 +34,18 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
  * @param res - Response - The response object that will be sent to the client
  * @returns The token
  */
-export const login = async (req: Request, res: Response, next: NextFunction) => {
+export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body as { email: string, password: string }
 
   /* Checking if the email exist in the database and save the data in a constant */
   const userData = await usersService.getUserByEmail(email)
-  if (userData.length === 0) return next(new CustomError(400, 'The email is not registered, create an account'))
+  if (userData.length === 0) throw new CustomError(400, 'The email is not registered, create an account')
   const user = userData[0]
 
   /* Comparing the password that the user sent with the password that is stored in the database, 
   sign and get the token to send to the user */
   const passwordMatch = await compare(password, user.passwordUser)
-  if (!passwordMatch) return next(new CustomError(400, 'The password is incorrect, verify it'))
+  if (!passwordMatch) throw new CustomError(400, 'The password is incorrect, verify it')
   const token = await tokenSign(user)
 
   const response = {
@@ -62,16 +62,16 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
  * @param res - Response - The response object that is returned by the express server.
  * @returns The user info email, id and username
  */
-export const getUser = async (req: Request, res: Response, next: NextFunction) => {
+export const getUser = async (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(' ').pop()
 
   /* Checking if the token is undefined, if it is, it throws an error. */
-  if (token === undefined) { return next(new CustomError(400, 'The auth token was not send')) }
+  if (token === undefined) throw new CustomError(400, 'The auth token was not send')
 
   /* Verifying the token that the user sent, if the token is valid, it returns the data of the token that
     was signed, if the token is not valid, it returns and Error. */
   const decodedToken = await verifyToken(token)
-  if (decodedToken === null) { return next(new CustomError(401, 'There is an problem with authentication, try again')) }
+  if (decodedToken === null) throw new CustomError(401, 'There is an problem with authentication, try again')
   const { id } = decodedToken
 
   /* Destructuring the object that is returned by the function getUserById, and it is saving the values */

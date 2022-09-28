@@ -1,3 +1,4 @@
+import { catchWrap } from '../../helpers/catchWrap'
 import express from 'express'
 const router = express.Router()
 
@@ -6,8 +7,8 @@ import * as controller from './users.controllers'
 import * as validation from './users.validation'
 
 /* Create */
-router.post('/:idUser/persons', checkAuth, validation.createPerson, controller.createPerson)
-// router.post("/:idUser/foods", checkAuth, validation.createFood, controller.createFood)
+router.post('/:idUser/persons', checkAuth, validation.createPerson, catchWrap(controller.createPerson))
+router.post('/:idUser/foods', checkAuth, validation.createFood, catchWrap(controller.createFood))
 // router.post("/:idUser/meals", checkAuth, validation.createMeal, controller.createMeal)
 
 /* Read */
