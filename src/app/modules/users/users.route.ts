@@ -9,7 +9,7 @@ import * as validation from './users.validation'
 /* Create */
 router.post('/:idUser/persons', checkAuth, validation.createPerson, catchWrap(controller.createPerson))
 router.post('/:idUser/foods', checkAuth, validation.createFood, catchWrap(controller.createFood))
-// router.post("/:idUser/meals", checkAuth, validation.createMeal, controller.createMeal)
+router.post('/:idUser/meals', checkAuth, validation.createMeal, catchWrap(controller.createMeal))
 
 /* Read */
 // router.get("/:idUser/person-weights", checkAuth, validation.getPersonsWeights, controller.getPersonsWeights)
