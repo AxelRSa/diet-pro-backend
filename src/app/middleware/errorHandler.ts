@@ -10,10 +10,16 @@ import { Request, Response, NextFunction } from 'express'
  * the next middleware function in the stack.
  * @returns return a response from the server
  */
-function errorHandler(err: CustomError, _req: Request, res: Response, _next: NextFunction) {
-  return res
-    .status(err.status)
-    .json({ message: err.message })
+function errorHandler(error: CustomError | Error, _req: Request, res: Response, _next: NextFunction) {
+  if (error instanceof CustomError) {
+    return res
+      .status(error.status)
+      .json({ message: error.message })
+  } else {
+    return res
+      .status(500)
+      .json({ message: 'Unexpected error, contact support' })
+  }
 }
 
 export default errorHandler
