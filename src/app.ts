@@ -13,6 +13,7 @@ import morgan from 'morgan'
 import authRouter from './app/modules/auth/auth.route'
 import usersRouter from './app/modules/users/users.route'
 import personsRouter from './app/modules/persons/persons.route'
+import foodsRouter from './app/modules/foods/foods.route'
 
 /* Importing error middleware. */
 import errorHandler from './app/middleware/errorHandler'
@@ -38,7 +39,7 @@ app.use(morgan('tiny'))
 app.use('/api/auth', authRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/persons', personsRouter)
-// app.use("/api/foods", require("./app/modules/foods/foods.route"))
+app.use('/api/foods', foodsRouter)
 // app.use("/api/meals", require("./app/modules/meals/meals.route"))
 
 /* Error handling middleware */

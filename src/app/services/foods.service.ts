@@ -3,6 +3,7 @@ import { makeAQueryToDataBase } from '../helpers/makeAQueryToDataBase'
 import { ResultSetHeader, RowDataPacket } from 'mysql2'
 
 /* Create */
+
 /**
  * Create a food register in our database
  * @param idUser - user id 
@@ -24,7 +25,27 @@ export const createFood = async (idUser: string, nameFood: string, proteinFood: 
   return dataFromDB
 }
 
+/**
+ * Create a food measure
+ * @param idFood - food id
+ * @param nameMeasure - measure name
+ * @param gramsMeasure - measure grams
+ * @returns The result of the query.
+ */
+export const createFoodMeasure = async (idFood: string, nameMeasure: string, gramsMeasure: string) => {
+  const dataFromDB = await makeAQueryToDataBase<ResultSetHeader>(async () => {
+    const sql =
+      `
+      INSERT INTO foods_measures (id_food, name, grams)
+      VALUES (?, ?, ?)
+			`
+    return await pool.query(sql, [idFood, nameMeasure, gramsMeasure])
+  })
+  return dataFromDB
+}
+
 /* Read */
+
 /**
  * Return an array of the registers with the same name
  * @param idUser - user id
@@ -44,6 +65,29 @@ export const getFoodsByIdUserAndName = async (idUser:string, nameFood:string) =>
   })
   return dataFromDB[0] as {nameFood:string}[]
 }
+
+/**
+ * It takes idFood and nameMeasure as arguments, makes a query to the database, and returns an array of objects
+ * with a single property, measureName 
+ * @param idFood - food id
+ * @param nameMeasure - measure name
+ * @returns An array of objects with the property measureName.
+ */
+export const getFoodMeasuresByIdFoodAndName = async (idFood:string, nameMeasure:string) => {
+  const dataFromDB = await makeAQueryToDataBase<RowDataPacket[]>(async () => {
+    const sql =
+      `
+      SELECT name as measureName
+      FROM foods_measures
+      WHERE id_food = ?
+      AND name = ?
+      `
+    return await pool.query(sql, [idFood, nameMeasure])
+  })
+  return dataFromDB[0] as {measureName:string}[]
+}
+
+
 
 /* Update */
 
