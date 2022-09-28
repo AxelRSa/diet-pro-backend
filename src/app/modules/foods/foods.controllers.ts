@@ -24,6 +24,12 @@ export const createFoodMeasure = async (req: Request, res: Response) => {
 /* Read */
 /* Update */
 /* Delete */
+
+/**
+ * It deletes a food from the database.
+ * @param req - Request - The request object.
+ * @param res - Response - The response object that will be sent back to the client.
+ */
 export const deleteFood = async (req: Request, res: Response) => {
   const { idFood } = req.params as { idFood:string }
 
@@ -33,4 +39,18 @@ export const deleteFood = async (req: Request, res: Response) => {
   await foodsService.deleteFoodByIdFood(idFood)
 
   res.json({ message: 'The food was deleted' })
+}
+
+
+/**
+ * It deletes a food measure by its idMeasure.
+ * @param req - Request from express
+ * @param res - Response from express
+ */
+export const deleteFoodMeasure = async (req: Request, res: Response) => {
+  const { idMeasure } = req.params as { idMeasure:string }
+
+  await foodsService.deleteFoodMeasureByIdMeasure(idMeasure)
+
+  res.json({ message: 'The measure was deleted' })
 }

@@ -16,6 +16,6 @@ router.post('/:idFood/measures', checkAuth, validation.createFoodMeasure, catchW
 
 /* Delete */
 router.delete('/:idFood', checkAuth, validation.deleteFood, catchWrap(controller.deleteFood))
-// router.delete("/measures/:idMeasure", checkAuth, validation.deleteFoodMeasure, catchWrap(controller.deleteFoodMeasure))
+router.delete('/measures/:idMeasure', checkAuth, validation.deleteFoodMeasure, catchWrap(controller.deleteFoodMeasure))
 
 export default router

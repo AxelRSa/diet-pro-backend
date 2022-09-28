@@ -107,3 +107,21 @@ export const deleteFoodByIdFood = async (idFood:string) => {
   })
   return dataFromDB
 }
+
+/**
+ * This function deletes a food measure from the database by its id.
+ * @param idMeasure - measure id
+ * @returns The result of the query.
+ */
+export const deleteFoodMeasureByIdMeasure = async (idMeasure:string) => {
+  const dataFromDB = await makeAQueryToDataBase<ResultSetHeader>(async () => {
+    const sql =
+      `
+      DELETE FROM foods_measures
+      WHERE id_food_measure = ?
+      `
+    return await pool.query(sql, [idMeasure])
+  })
+  return dataFromDB
+}
+
