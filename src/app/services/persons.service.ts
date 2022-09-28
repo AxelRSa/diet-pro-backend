@@ -22,6 +22,13 @@ export const createPerson = async (idUser:string, namePerson:string) => {
   return dataFromDB
 }
 
+/**
+ * Creates a register in person_weights
+ * @param idPerson - person id
+ * @param weight - weight registered
+ * @param date - date when the weight was registered
+ * @returns The result of the query.
+ */
 export const createPersonWeightByIdPerson = async (idPerson:string, weight:string, date:string) => {
   const dataFromDB = await makeAQueryToDataBase<ResultSetHeader>(async () => {
     const sql =
@@ -38,8 +45,8 @@ export const createPersonWeightByIdPerson = async (idPerson:string, weight:strin
 
 /**
  * It returns an array of persons with the same name that the user provide
- * @param {number} idUser - id user
- * @param {string} name - name that the user provide
+ * @param idUser - id user
+ * @param name - name that the user provide
  * @returns An array of objects with the registers with that name property.
  */
 export const getPersonByIdUserAndName = async (idUser:string, namePerson:string) => {
