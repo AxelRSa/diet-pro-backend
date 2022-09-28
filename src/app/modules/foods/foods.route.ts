@@ -12,10 +12,10 @@ router.post('/:idFood/measures', checkAuth, validation.createFoodMeasure, catchW
 /* Read */
 
 /* Update */
-// router.put("/:idFood/measures/:idMeasure", checkAuth, validation.updateFoodMeasure, controller.updateFoodMeasure)
+// router.put("/:idFood/measures/:idMeasure", checkAuth, validation.updateFoodMeasure, catchWrap(controller.updateFoodMeasure))
 
 /* Delete */
-// router.delete("/measures/:idMeasure", checkAuth, validation.deleteFoodMeasure, controller.deleteFoodMeasure)
-// router.delete("/:idFood", checkAuth, validation.deleteFood, controller.deleteFood)
+router.delete('/:idFood', checkAuth, validation.deleteFood, catchWrap(controller.deleteFood))
+// router.delete("/measures/:idMeasure", checkAuth, validation.deleteFoodMeasure, catchWrap(controller.deleteFoodMeasure))
 
 export default router

@@ -73,7 +73,7 @@ export const getFoodsByIdUserAndName = async (idUser:string, nameFood:string) =>
  * @param nameMeasure - measure name
  * @returns An array of objects with the property measureName.
  */
-export const getFoodMeasuresByIdFoodAndName = async (idFood:string, nameMeasure:string) => {
+export const getFoodMeasuresByIdFoodAndMeasureName = async (idFood:string, nameMeasure:string) => {
   const dataFromDB = await makeAQueryToDataBase<RowDataPacket[]>(async () => {
     const sql =
       `
@@ -87,8 +87,23 @@ export const getFoodMeasuresByIdFoodAndName = async (idFood:string, nameMeasure:
   return dataFromDB[0] as {measureName:string}[]
 }
 
-
-
 /* Update */
 
 /* Delete */ 
+
+/**
+ * It deletes a food from the database by its id.
+ * @param idFood - string
+ * @returns The result of the query.
+ */
+export const deleteFoodByIdFood = async (idFood:string) => {
+  const dataFromDB = await makeAQueryToDataBase<ResultSetHeader>(async () => {
+    const sql =
+      `
+      DELETE FROM foods
+      WHERE id_food = ?
+      `
+    return await pool.query(sql, [idFood])
+  })
+  return dataFromDB
+}

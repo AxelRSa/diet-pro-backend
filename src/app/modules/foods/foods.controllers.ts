@@ -14,7 +14,7 @@ export const createFoodMeasure = async (req: Request, res: Response) => {
   const { name, quantity } = req.body as { name:string, quantity:string }
 
   /* Checking if the name of received measure exists and if not, create one. */
-  const foodMeasureWithThatName = await foodsService.getFoodMeasuresByIdFoodAndName(idFood, name)
+  const foodMeasureWithThatName = await foodsService.getFoodMeasuresByIdFoodAndMeasureName(idFood, name)
   if (foodMeasureWithThatName.length >= 1) throw new CustomError(400, 'That measure exists, please, choose another one') 
   await foodsService.createFoodMeasure(idFood, name, quantity)
 
@@ -24,3 +24,13 @@ export const createFoodMeasure = async (req: Request, res: Response) => {
 /* Read */
 /* Update */
 /* Delete */
+export const deleteFood = async (req: Request, res: Response) => {
+  const { idFood } = req.params as { idFood:string }
+
+  // ! urgent change 
+  // todo add methods to check if the register depends on others tables
+
+  await foodsService.deleteFoodByIdFood(idFood)
+
+  res.json({ message: 'The food was deleted' })
+}
