@@ -2,14 +2,14 @@ import { check } from 'express-validator'
 import { validateResult } from './../../helpers/validateHelper'
 
 /* Create */
-/** Validation for "users/:idUser/persons" route */
+/** Validation for POST "users/:idUser/persons" route */
 export const createPerson = [
   check('idUser').exists().isNumeric().notEmpty(),
   check('name').exists().notEmpty().isString(),
   validateResult
 ]
 
-/** Validation for "users/:idUser/foods" route */
+/** Validation for POST "users/:idUser/foods" route */
 export const createFood = [
   check('idUser').exists().notEmpty(),
   check('name').exists().notEmpty().isString(),
@@ -19,7 +19,7 @@ export const createFood = [
   validateResult
 ]
 
-/** Validation for "users/:idUser/meals" route */
+/** Validation for POST "users/:idUser/meals" route */
 export const createMeal = [
   check('idUser').exists().notEmpty(),
   check('name').exists().notEmpty().isString(),
@@ -29,7 +29,7 @@ export const createMeal = [
 ]
 
 /* Read */
-/** Validation for "users/:idUser/person-weights" route */
+/** Validation for GET "users/:idUser/person-weights" route */
 export const getPersonsWeights = [
   check('firstDate').exists().notEmpty().isDate(),
   check('secondDate').exists().notEmpty().isDate(),
@@ -37,7 +37,7 @@ export const getPersonsWeights = [
   validateResult
 ]
 
-/** Validation for "users/:idUser/foods" route */
+/** Validation for GET "users/:idUser/foods" route */
 export const getFoods = [
   check('search').exists().isString(),
   check('idUser').exists().notEmpty().isNumeric(),
@@ -45,7 +45,7 @@ export const getFoods = [
   validateResult
 ]
 
-/** Validation for "users/:idUser/persons/:idPerson/person-weights" route */
+/** Validation for GET "users/:idUser/persons/:idPerson/person-weights" route */
 export const getPersonWeights = [
   check('firstDate').exists().notEmpty().isDate(),
   check('secondDate').exists().notEmpty().isDate(),
@@ -53,14 +53,14 @@ export const getPersonWeights = [
   validateResult
 ]
 
-/** Validation for "users/:idUser/foods/:idFood" route */
+/** Validation for GET "users/:idUser/foods/:idFood" route */
 export const getFood = [
   check('idFood').exists().notEmpty().isNumeric(),
   check('idUser').exists().notEmpty().isNumeric(),
   validateResult
 ]
 
-/** Validation for "users/:idUser/meals" route */
+/** Validation for GET "users/:idUser/meals" route */
 export const getMeals = [
   check('idUser').exists().notEmpty().isNumeric(),
   check('search').exists().isString(),
@@ -68,7 +68,7 @@ export const getMeals = [
   validateResult
 ]
 
-/** Validation for "users/:idUser/meals/:idMeal" route */
+/** Validation for GET "users/:idUser/meals/:idMeal" route */
 export const getMeal = [
   check('idUser').exists().notEmpty().isNumeric(),
   check('idMeal').exists().notEmpty().isNumeric(),
@@ -77,7 +77,7 @@ export const getMeal = [
 
 
 /* Update */
-/** Validation for "users/:idUser/persons/:idPerson" route */
+/** Validation for PUT "users/:idUser/persons/:idPerson" route */
 export const updatePersonName = [
   check('idPerson').exists().notEmpty(),
   check('idUser').exists().notEmpty(),
@@ -85,7 +85,7 @@ export const updatePersonName = [
   validateResult
 ]
 
-/** Validation for "users/:idUser/foods/:idFood" route */
+/** Validation for PUT "users/:idUser/foods/:idFood" route */
 export const updateFood = [
   check('idUser').exists().notEmpty().isNumeric(),
   check('idFood').exists().notEmpty().isNumeric(),
@@ -96,7 +96,7 @@ export const updateFood = [
   validateResult
 ]
 
-/** Validation for "users/:idUser/meals/:idMeal" route */
+/** Validation for PUT "users/:idUser/meals/:idMeal" route */
 export const updateMeal = [
   check('idUser').exists().notEmpty().isNumeric(),
   check('idMeal').exists().notEmpty().isNumeric(),
