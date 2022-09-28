@@ -1,4 +1,6 @@
 import pool from '../../config/db'
+import { makeAQueryToDataBase } from '../helpers/makeAQueryToDataBase'
+import { ResultSetHeader, RowDataPacket } from 'mysql2'
 
 /* Create */
 
@@ -8,15 +10,16 @@ import pool from '../../config/db'
  * @param name - name of the person
  * @returns The result of the query.
  */
-export const createPerson = async (idUser:string, name:string) => {
-  try {
+export const createPerson = async (idUser:string, namePerson:string) => {
+  const dataFromDB = await makeAQueryToDataBase<ResultSetHeader>(async () => {
     const sql =
       `
       INSERT INTO persons (id_user , name)
       VALUES (?, ?)
-      `
-    return await pool.query(sql, [idUser, name]) 
-  } catch (error) { console.log(error); throw new Error('Database error, contact support') }
+			`
+    return await pool.query(sql, [idUser, namePerson])
+  })
+  return dataFromDB
 }
 
 /* Read */
@@ -27,16 +30,16 @@ export const createPerson = async (idUser:string, name:string) => {
  * @param {string} name - name that the user provide
  * @returns An array of objects with the registers with that name property.
  */
-export const getPersonByIdUserAndName = async (idUser:string, name:string) => {
-  try {
+export const getPersonByIdUserAndName = async (idUser:string, namePerson:string) => {
+  const dataFromDB = await makeAQueryToDataBase<RowDataPacket[]>(async () => {
     const sql =
       `
       SELECT name as namePerson
       FROM persons
       WHERE id_user = ?
       AND name = ?
-      `
-    const response = await pool.query(sql, [idUser, name])
-    return response[0] as {namePerson: string}[]
-  } catch (error) { console.log(error); throw new Error('Database error, contact support') }
+			`
+    return await pool.query(sql, [idUser, namePerson])
+  })
+  return dataFromDB[0] as {namePerson:string}[]
 }
