@@ -7,7 +7,7 @@ import { validateResult } from '../../helpers/validateHelper'
 export const createFoodMeasure = [
   check('idFood').exists().notEmpty().isNumeric(),
   check('name').exists().notEmpty().isString(),
-  check('quantity').exists().notEmpty().isNumeric(),
+  check('grams').exists().notEmpty().isNumeric(),
   validateResult
 ]
 
@@ -20,7 +20,7 @@ export const updateFoodMeasure = [
   check('idFood').exists().notEmpty().isNumeric(),
   check('idMeasure').exists().notEmpty().isNumeric(),
   check('name').exists().notEmpty().isString(),
-  check('quantity').exists().notEmpty().isNumeric(),
+  check('grams').exists().notEmpty().isNumeric(),
   validateResult
 ]
 

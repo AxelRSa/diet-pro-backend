@@ -12,7 +12,7 @@ router.post('/:idFood/measures', checkAuth, validation.createFoodMeasure, catchW
 /* Read */
 
 /* Update */
-// router.put("/:idFood/measures/:idMeasure", checkAuth, validation.updateFoodMeasure, catchWrap(controller.updateFoodMeasure))
+router.put('/:idFood/measures/:idMeasure', checkAuth, validation.updateFoodMeasure, catchWrap(controller.updateFoodMeasure))
 
 /* Delete */
 router.delete('/:idFood', checkAuth, validation.deleteFood, catchWrap(controller.deleteFood))

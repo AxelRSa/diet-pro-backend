@@ -71,23 +71,45 @@ export const getFoodsByIdUserAndName = async (idUser:string, nameFood:string) =>
  * with a single property, measureName 
  * @param idFood - food id
  * @param nameMeasure - measure name
- * @returns An array of objects with the property measureName.
+ * @returns An array of objects with the property idMeasure.
  */
 export const getFoodMeasuresByIdFoodAndMeasureName = async (idFood:string, nameMeasure:string) => {
   const dataFromDB = await makeAQueryToDataBase<RowDataPacket[]>(async () => {
     const sql =
       `
-      SELECT name as measureName
+      SELECT 
+      id_food_measure as idMeasure
       FROM foods_measures
       WHERE id_food = ?
       AND name = ?
       `
     return await pool.query(sql, [idFood, nameMeasure])
   })
-  return dataFromDB[0] as {measureName:string}[]
+  return dataFromDB[0] as {idMeasure:number}[]
 }
 
 /* Update */
+
+
+/**
+ * It updates the measure name and grams of a food measure by its id.
+ * @param {string} idMeasure - measure id
+ * @param {string} nameMeasure - measure name
+ * @param {string} gramsMeasure - measure grams
+ * @returns The result of the query.
+ */
+export const updateFoodMeasureByIdMeasure = async (idMeasure: string, nameMeasure: string, gramsMeasure: string) => {
+  const dataFromDB = await makeAQueryToDataBase<ResultSetHeader>(async () => {
+    const sql =
+      `
+      UPDATE foods_measures
+      SET name = ?, grams = ?
+      WHERE id_food_measure = ?
+			`
+    return await pool.query(sql, [nameMeasure, gramsMeasure, idMeasure])
+  })
+  return dataFromDB
+}
 
 /* Delete */ 
 
